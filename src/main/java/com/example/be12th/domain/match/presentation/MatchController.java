@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/match")
 public class MatchController {
 
-    private MatchQueryService matchQueryService;
+    private final MatchQueryService matchQueryService;
 
-    @GetMapping("/match_id")
+    @GetMapping("/{matchId}")
     public MatchResponse query(@PathVariable Long matchId) {
         return matchQueryService.execute(matchId);
     }
