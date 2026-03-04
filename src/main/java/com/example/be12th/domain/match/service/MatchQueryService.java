@@ -15,7 +15,7 @@ public class MatchQueryService {
     @Transactional(readOnly = true)
     public MatchResponse execute(Long matchId){
         Match match = matchRepository.findById(matchId)
-                .orElseThrow(() -> new RuntimeException("해당 매치를 찾을수 없습니다."));
+                .orElseThrow(() -> new RuntimeException("해당 매치를 찾을수 없습니다!"));
 
         return MatchResponse.from(match);
     }
