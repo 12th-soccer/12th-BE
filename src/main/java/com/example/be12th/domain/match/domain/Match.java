@@ -1,8 +1,8 @@
 package com.example.be12th.domain.match.domain;
 
+import com.example.be12th.domain.club.domain.Club;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +16,14 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "match_id", nullable = false)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "home_club_id")
+    private Club homeClub;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "away_club_id")
+    private Club awayClub;
 
     @Column(name = "home_score", nullable = false)
     private int homeScore;
