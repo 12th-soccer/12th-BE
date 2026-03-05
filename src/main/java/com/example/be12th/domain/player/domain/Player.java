@@ -31,4 +31,5 @@ public class Player {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Club club;
+
 }
