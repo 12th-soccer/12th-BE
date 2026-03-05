@@ -1,6 +1,5 @@
 package com.example.be12th.domain.player.presentation.dto.response;
 
-import com.example.be12th.domain.club.domain.Club;
 import com.example.be12th.domain.player.domain.Player;
 import com.example.be12th.domain.player.domain.Position;
 import lombok.AllArgsConstructor;
