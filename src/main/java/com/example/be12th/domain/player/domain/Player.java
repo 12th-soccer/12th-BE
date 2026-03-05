@@ -22,6 +22,7 @@ public class Player {
     @Column(nullable = false,name = "player_age")
     private int age;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "player_position")
     private Position position;
 

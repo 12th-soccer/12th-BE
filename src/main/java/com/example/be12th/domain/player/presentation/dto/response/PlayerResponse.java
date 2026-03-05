@@ -14,7 +14,7 @@ public class PlayerResponse {
     private int age;
     private Position position;
     private int number;
-    private Club club;
+    private String clubName;
 
     public static PlayerResponse from(Player player) {
         return new PlayerResponse(
@@ -23,7 +23,7 @@ public class PlayerResponse {
                 player.getAge(),
                 player.getPosition(),
                 player.getNumber(),
-                player.getClub()
+                player.getClub().getClubName()
         );
     }
 }
