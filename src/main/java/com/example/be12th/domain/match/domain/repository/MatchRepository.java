@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MatchRepository extends JpaRepository<Match, Long> {
-    List<Match> findByHomeClubIdOrAwayClubId(Long homeClubId, Long awayClubId);
+    List<Match> findByHomeClub_IdOrAwayClub_Id(Long homeClubId, Long awayClubId);
 }
