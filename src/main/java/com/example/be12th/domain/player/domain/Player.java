@@ -30,6 +30,7 @@ public class Player {
     private int number;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "club_id")
     private Club club;
 
 }
