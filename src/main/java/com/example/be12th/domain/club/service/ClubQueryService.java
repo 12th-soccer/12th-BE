@@ -22,7 +22,7 @@ public class ClubQueryService {
         Club club = clubRepository.findById(clubId)
                 .orElseThrow(() -> new RuntimeException("해당 클럽을 찾을수 없습니다."));
 
-        List<Match> matches = matchRepository.findByHomeClub_IdOrAwayClub_Id(clubId, clubId);
+        List<Match> matches = matchRepository.findByHomeClubIdOrAwayClubId(clubId, clubId);
         
         return ClubResponse.from(club,matches);
     }
