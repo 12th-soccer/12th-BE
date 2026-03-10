@@ -24,7 +24,7 @@ public class MatchController {
         return matchQueryService.execute(matchId);
     }
 
-    @GetMapping("")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MatchResponse> queryAll(@RequestParam LocalDate date) {
         return caleanderQueryService.execute(date);

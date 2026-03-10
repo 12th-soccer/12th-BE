@@ -5,7 +5,6 @@ import com.example.be12th.domain.match.domain.Match;
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.util.List;
 
 @Getter
