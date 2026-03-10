@@ -21,15 +21,19 @@ public class Club {
     @Column(name = "stadium_name", nullable = false)
     private String stadiumName;
 
+    @Builder.Default
     @Column(name = "club_point", nullable = false)
     private Integer clubPoint = 0;
 
+    @Builder.Default
     @Column(name = "club_win", nullable = false)
     private Integer clubWin = 0;
 
+    @Builder.Default
     @Column(name = "club_lose", nullable = false)
     private Integer clubLose = 0;
 
+    @Builder.Default
     @Column(name = "club_draw", nullable = false)
     private Integer clubDraw = 0;
 }
