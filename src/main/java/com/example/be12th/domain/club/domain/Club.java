@@ -22,14 +22,14 @@ public class Club {
     private String stadiumName;
 
     @Column(name = "club_point", nullable = false)
-    private Integer clubPoint;
+    private Integer clubPoint = 0;
 
     @Column(name = "club_win", nullable = false)
-    private Integer clubWin;
+    private Integer clubWin = 0;
 
     @Column(name = "club_lose", nullable = false)
-    private Integer clubLose;
+    private Integer clubLose = 0;
 
     @Column(name = "club_draw", nullable = false)
-    private Integer clubDraw;
+    private Integer clubDraw = 0;
 }
