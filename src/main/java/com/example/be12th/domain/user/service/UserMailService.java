@@ -1,6 +1,5 @@
 package com.example.be12th.domain.user.service;
 
-import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +7,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
 import java.util.concurrent.TimeUnit;
 
 
