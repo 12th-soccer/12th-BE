@@ -2,8 +2,11 @@ package com.example.be12th.domain.user.presentation;
 
 import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
+import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
 import com.example.be12th.domain.user.service.UserCheckMailService;
 import com.example.be12th.domain.user.service.UserMailService;
+import com.example.be12th.domain.user.service.UserSignupServicde;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserCheckMailService userCheckMailService;
     private final UserMailService userMailService;
+    private final UserSignupServicde userSignupServicde;
 
     @PostMapping("/email")
     @ResponseStatus(HttpStatus.OK)
@@ -25,5 +29,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public boolean verifyEmail(@RequestBody EmailCheckRequest emailCheckRequest) {
         return userCheckMailService.execute(emailCheckRequest);
+    }
+
+    @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void signup(@Valid @RequestBody UserRequest userRequest) {
+        userSignupServicde.execute(userRequest);
     }
 }
