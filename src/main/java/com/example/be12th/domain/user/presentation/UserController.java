@@ -3,7 +3,9 @@ package com.example.be12th.domain.user.presentation;
 import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
 import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
+import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
 import com.example.be12th.domain.user.service.UserCheckMailService;
+import com.example.be12th.domain.user.service.UserLoginService;
 import com.example.be12th.domain.user.service.UserMailService;
 import com.example.be12th.domain.user.service.UserSignupServicde;
 import jakarta.validation.Valid;
@@ -18,6 +20,7 @@ public class UserController {
     private final UserCheckMailService userCheckMailService;
     private final UserMailService userMailService;
     private final UserSignupServicde userSignupServicde;
+    private final UserLoginService userLoginService;
 
     @PostMapping("/email")
     @ResponseStatus(HttpStatus.OK)
@@ -35,5 +38,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public void signup(@Valid @RequestBody UserRequest userRequest) {
         userSignupServicde.execute(userRequest);
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public LoginResponse login(@RequestBody UserRequest userRequest) {
+        return userLoginService.execute(userRequest);
     }
 }

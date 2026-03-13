@@ -20,7 +20,7 @@ public class UserLoginService {
         User user = userRepository.findByEmail(userRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을수없다"));
 
-        if(!passwordEncoder.matches(userRequest.getEmail(), user.getPassword())) {
+        if(!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
             throw new RuntimeException("비밀빈호가 일치하지않습니다.");
         }
         String accessToken =

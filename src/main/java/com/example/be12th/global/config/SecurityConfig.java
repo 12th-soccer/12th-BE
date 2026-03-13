@@ -27,10 +27,11 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth-> auth
 
-                        //signup
+                        //user
                         .requestMatchers(HttpMethod.POST,"/user/email").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/email/verify").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/user/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(
