@@ -1,9 +1,7 @@
 package com.example.be12th.domain.club.service;
 
 import com.example.be12th.domain.club.domain.repository.ClubRepository;
-import com.example.be12th.domain.club.presentation.dto.response.ClubResponse;
 import com.example.be12th.domain.club.presentation.dto.response.ClubSearchResponse;
-import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
