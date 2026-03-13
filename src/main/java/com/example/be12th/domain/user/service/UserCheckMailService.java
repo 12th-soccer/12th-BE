@@ -14,9 +14,14 @@ public class UserCheckMailService {
 
         String saveCode = redisTemplate.opsForValue().get(emailCheckRequest.getEmail());
 
-        if(saveCode == null) {
+        if (saveCode == null) {
             return false;
         }
-        return saveCode.equals(emailCheckRequest.getCode());
+        if (saveCode.equals(emailCheckRequest.getCode())) {
+            redisTemplate.delete(emailCheckRequest.getEmail());
+            redisTemplate.opsForValue().set(emailCheckRequest.getEmail() + "verified", "true");
+            return true;
+        }
+        return false;
     }
 }

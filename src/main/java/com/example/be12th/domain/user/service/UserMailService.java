@@ -22,13 +22,14 @@ public class UserMailService {
         return String.valueOf((int)(Math.random()*900000)+100000);
     }
 
-    public void saveCode(String email, String code){
+    public void saveCode(String email, String code) {
         redisTemplate.opsForValue()
                 .set(email, code, 5, TimeUnit.MINUTES);
     }
-
     public void execute(EmailRequest emailRequest){
+        String verified = redisTemplate.opsForValue().get(emailRequest.getEmail()+"verified");
 
+        if(verified == null){
         String code = createCode();
 
         saveCode(emailRequest.getEmail(),code);
@@ -40,7 +41,9 @@ public class UserMailService {
         mailMessage.setText("인증코드 : " + code);
 
         javaMailSender.send(mailMessage);
+        }
+        else{
+            throw new RuntimeException("이미 인증이 완료되었습니다.");
+        }
     }
-
-
 }
