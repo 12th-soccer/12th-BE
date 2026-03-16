@@ -7,7 +7,7 @@ import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
 import com.example.be12th.domain.user.service.UserCheckMailService;
 import com.example.be12th.domain.user.service.UserLoginService;
 import com.example.be12th.domain.user.service.UserMailService;
-import com.example.be12th.domain.user.service.UserSignupServicde;
+import com.example.be12th.domain.user.service.UserSignupService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserCheckMailService userCheckMailService;
     private final UserMailService userMailService;
-    private final UserSignupServicde userSignupServicde;
+    private final UserSignupService userSignupServicde;
     private final UserLoginService userLoginService;
 
     @PostMapping("/email")
