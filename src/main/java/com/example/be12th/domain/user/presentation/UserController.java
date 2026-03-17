@@ -7,6 +7,7 @@ import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
 import com.example.be12th.domain.user.service.UserCheckMailSignupService;
 import com.example.be12th.domain.user.service.UserLoginService;
 import com.example.be12th.domain.user.service.UserMailService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class UserController {
 >>>>>>> 19d1ae5 (refactor : 이메일인증 방식 변경)
     @PostMapping("/verify/signup")
     @ResponseStatus(HttpStatus.OK)
-    public boolean verifyEmail(@RequestBody EmailCheckRequest emailCheckRequest) {
+    public boolean verifyEmail(@RequestBody @Valid EmailCheckRequest emailCheckRequest) {
         return userCheckMailService.execute(emailCheckRequest);
     }
 
