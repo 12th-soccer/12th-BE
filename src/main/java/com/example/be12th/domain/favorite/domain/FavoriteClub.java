@@ -14,6 +14,7 @@ import lombok.*;
 public class FavoriteClub {
     @Id
     @Column(name = "favorite_club_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

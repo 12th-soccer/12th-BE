@@ -4,7 +4,6 @@ import com.example.be12th.domain.club.domain.Club;
 import com.example.be12th.domain.club.domain.repository.ClubRepository;
 import com.example.be12th.domain.favorite.domain.FavoriteClub;
 import com.example.be12th.domain.favorite.domain.repository.FavoriteClubRepository;
-import com.example.be12th.domain.favorite.presentation.dto.FavoriteClubRequest;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
@@ -19,11 +18,11 @@ public class FavoriteClubService {
     private final ClubRepository clubRepository;
     private final UserFacade userFacade;
 
-    public void execute(FavoriteClubRequest favoriteClubRequest) {
+    public void execute(Long clubId) {
         User user = userRepository.findById((userFacade.currentUserId()))
                 .orElseThrow(() -> new RuntimeException("유저를 찾을수없습니다."));
 
-        Club club = clubRepository.findById(favoriteClubRequest.getClubId())
+        Club club = clubRepository.findById(clubId)
                 .orElseThrow(() -> new RuntimeException("해당 구단 아이디를 찾을수 없습니다."));
 
         final Boolean ExistUserAndClub = favoriteClubRepository.existsByUserAndClub(user , club);

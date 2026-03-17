@@ -10,6 +10,5 @@ import java.util.List;
 public interface FavoriteClubRepository extends JpaRepository<FavoriteClub, Long> {
     List<FavoriteClub> findByUser(User user);
     boolean existsByUserAndClub(User user, Club club);
-
     User user(User user);
 }
