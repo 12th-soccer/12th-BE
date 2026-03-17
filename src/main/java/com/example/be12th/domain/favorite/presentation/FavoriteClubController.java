@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.*;
 public class FavoriteClubController {
     private final FavoriteClubService favoriteClubService;
 
-    @PostMapping("/club/{id}")
+    @PostMapping("/club/{clubId}")
     @ResponseStatus(HttpStatus.OK)
-    public void favoriteClub(@PathVariable Long id) {
-        favoriteClubService.execute(id);
+    public void favoriteClub(@PathVariable Long clubId) {
+        favoriteClubService.execute(clubId);
     }
-
-
 }

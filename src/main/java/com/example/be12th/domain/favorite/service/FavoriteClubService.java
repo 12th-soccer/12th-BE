@@ -35,5 +35,4 @@ public class FavoriteClubService {
                 .build();
         favoriteClubRepository.save(favoriteClub);
     }
-
 }
