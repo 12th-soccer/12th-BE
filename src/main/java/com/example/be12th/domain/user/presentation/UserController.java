@@ -4,11 +4,9 @@ import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
 import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
 import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
-import com.example.be12th.domain.user.service.UserCheckMailService;
+import com.example.be12th.domain.user.service.UserCheckMailSignupService;
 import com.example.be12th.domain.user.service.UserLoginService;
 import com.example.be12th.domain.user.service.UserMailService;
-import com.example.be12th.domain.user.service.UserSignupService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
-    private final UserCheckMailService userCheckMailService;
+    private final UserCheckMailSignupService userCheckMailService;
     private final UserMailService userMailService;
-    private final UserSignupService userSignupServicde;
     private final UserLoginService userLoginService;
 
     @PostMapping("/email")
@@ -28,16 +25,10 @@ public class UserController {
         userMailService.execute(emailRequest);
     }
 
-    @PostMapping("/email/verify")
+    @PostMapping("/verify/signup")
     @ResponseStatus(HttpStatus.OK)
     public boolean verifyEmail(@RequestBody EmailCheckRequest emailCheckRequest) {
         return userCheckMailService.execute(emailCheckRequest);
-    }
-
-    @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void signup(@Valid @RequestBody UserRequest userRequest) {
-        userSignupServicde.execute(userRequest);
     }
 
     @PostMapping("/login")
