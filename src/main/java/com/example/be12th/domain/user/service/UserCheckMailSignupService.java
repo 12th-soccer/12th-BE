@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class UserCheckMailSignupService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public boolean execute(EmailCheckRequest emailCheckRequest) {
 
         String saveCode = redisTemplate.opsForValue().get(emailCheckRequest.getEmail());
@@ -22,6 +24,12 @@ public class UserCheckMailSignupService {
         if (saveCode == null) return false;
 
         if (saveCode.equals(emailCheckRequest.getCode())) {
+
+            if(userRepository.existsByEmail(emailCheckRequest.getEmail())) {
+                redisTemplate.delete(emailCheckRequest.getEmail());
+                return false;
+            }
+
             userRepository.save(
                     User.builder()
                             .email(emailCheckRequest.getEmail())
@@ -29,7 +37,8 @@ public class UserCheckMailSignupService {
                             .build()
             );
             redisTemplate.delete(emailCheckRequest.getEmail());
+            return true;
         }
-        return true;
+        return false;
     }
 }

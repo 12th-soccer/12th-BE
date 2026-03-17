@@ -15,6 +15,7 @@ public class EmailCheckRequest {
     @Email(message = "이메일 형식으로 작성해주세요.")
     private String email;
 
+    @NotBlank(message = "인증코드를 입력해주세요.")
     private String code;
 
     @NotBlank(message = "비밀번호에 공백,띄어쓰기를 포함하실수없습니다.")

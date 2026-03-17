@@ -8,6 +8,7 @@ import com.example.be12th.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class UserLoginService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public LoginResponse execute(UserRequest userRequest) {
         User user = userRepository.findByEmail(userRequest.getEmail())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을수없다"));

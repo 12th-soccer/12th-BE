@@ -30,7 +30,6 @@ public class SecurityConfig {
                         //user
                         .requestMatchers(HttpMethod.POST,"/user/email").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/verify/signup").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/user/signup").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/login").permitAll()
                         .anyRequest().authenticated()
                 )

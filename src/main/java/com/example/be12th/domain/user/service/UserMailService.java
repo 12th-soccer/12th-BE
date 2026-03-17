@@ -7,6 +7,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -21,11 +23,11 @@ public class UserMailService {
     private String createCode(){
         return String.valueOf((int)(Math.random()*900000)+100000);
     }
-
     public void saveCode(String email, String code) {
         redisTemplate.opsForValue()
                 .set(email, code, 5, TimeUnit.MINUTES);
     }
+    @Transactional
     public void execute(EmailRequest emailRequest){
         String verified = redisTemplate.opsForValue().get(emailRequest.getEmail()+"verified");
 
