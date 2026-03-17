@@ -2,7 +2,7 @@ package com.example.be12th.domain.user.service;
 
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
-import com.example.be12th.domain.user.presentation.dto.request.EmailCheckSignupRequest;
+import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserCheckMailService {
+public class UserCheckMailSignupService {
     private final RedisTemplate<String, String> redisTemplate;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public boolean execute(EmailCheckSignupRequest emailCheckRequest) {
+    public boolean execute(EmailCheckRequest emailCheckRequest) {
 
         String saveCode = redisTemplate.opsForValue().get(emailCheckRequest.getEmail());
 
