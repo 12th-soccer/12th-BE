@@ -30,24 +30,30 @@ public class UserController {
         userMailService.execute(emailRequest);
     }
 
+<<<<<<< HEAD
     /**
      * Validates an email verification request for signup.
      *
      * @param emailCheckRequest request containing the email and verification data for signup validation
      * @return {@code true} if the provided verification data is valid for the email, {@code false} otherwise
      */
+=======
+>>>>>>> 19d1ae5 (refactor : 이메일인증 방식 변경)
     @PostMapping("/verify/signup")
     @ResponseStatus(HttpStatus.OK)
     public boolean verifyEmail(@RequestBody EmailCheckRequest emailCheckRequest) {
         return userCheckMailService.execute(emailCheckRequest);
     }
 
+<<<<<<< HEAD
     /**
      * Authenticates a user using the provided credentials and returns authentication details.
      *
      * @param userRequest the user's login credentials (e.g., email or username and password)
      * @return a LoginResponse containing authentication information such as an access token and user data
      */
+=======
+>>>>>>> 19d1ae5 (refactor : 이메일인증 방식 변경)
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(@RequestBody UserRequest userRequest) {

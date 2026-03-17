@@ -2,7 +2,11 @@ package com.example.be12th.domain.user.service;
 
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
+<<<<<<< HEAD
 import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
+=======
+import com.example.be12th.domain.user.presentation.dto.request.EmailCheckSignupRequest;
+>>>>>>> 19d1ae5 (refactor : 이메일인증 방식 변경)
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,11 +14,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+<<<<<<< HEAD
 public class UserCheckMailSignupService {
+=======
+public class UserCheckMailService {
+>>>>>>> 19d1ae5 (refactor : 이메일인증 방식 변경)
     private final RedisTemplate<String, String> redisTemplate;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+<<<<<<< HEAD
     /**
      * Validates a stored email verification code and creates a new user when the provided code matches.
      *
@@ -22,6 +31,9 @@ public class UserCheckMailSignupService {
      * @return `true` if a verification code was present in Redis for the given email (a user is created when the codes match), `false` if no code was stored for the email
      */
     public boolean execute(EmailCheckRequest emailCheckRequest) {
+=======
+    public boolean execute(EmailCheckSignupRequest emailCheckRequest) {
+>>>>>>> 19d1ae5 (refactor : 이메일인증 방식 변경)
 
         String saveCode = redisTemplate.opsForValue().get(emailCheckRequest.getEmail());
 
