@@ -20,6 +20,16 @@ public class SecurityConfig {
 
     private final JwtTokenFilter jwtTokenFilter;
 
+    /**
+     * Configure the application's HTTP security.
+     *
+     * Disables CSRF, sets session management to STATELESS, permits unauthenticated POST access to
+     * /user/email, /user/verify/signup, /user/signup, and /user/login, requires authentication for all other requests,
+     * and registers the JwtTokenFilter before UsernamePasswordAuthenticationFilter.
+     *
+     * @param http the HttpSecurity to configure
+     * @return the configured SecurityFilterChain
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -29,7 +39,7 @@ public class SecurityConfig {
 
                         //user
                         .requestMatchers(HttpMethod.POST,"/user/email").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/user/email/verify").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/user/verify/signup").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/signup").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user/login").permitAll()
                         .anyRequest().authenticated()
