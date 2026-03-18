@@ -9,6 +9,7 @@ import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class FavoriteClubService {
     private final ClubRepository clubRepository;
     private final UserFacade userFacade;
 
+    @Transactional
     public void execute(Long clubId) {
         User user = userRepository.findById((userFacade.currentUserId()))
                 .orElseThrow(() -> new RuntimeException("유저를 찾을수없습니다."));
@@ -25,8 +27,8 @@ public class FavoriteClubService {
         Club club = clubRepository.findById(clubId)
                 .orElseThrow(() -> new RuntimeException("해당 구단 아이디를 찾을수 없습니다."));
 
-        final Boolean ExistUserAndClub = favoriteClubRepository.existsByUserAndClub(user , club);
-        if (ExistUserAndClub) {
+        final Boolean existUserAndClub = favoriteClubRepository.existsByUserAndClub(user , club);
+        if (existUserAndClub) {
             throw new RuntimeException("이미 즐겨찾기된 구단입니다..");
         }
         FavoriteClub favoriteClub =  FavoriteClub.builder()

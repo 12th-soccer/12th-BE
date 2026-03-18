@@ -6,11 +6,17 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(
+        name = "tbl_favorite_club",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "club_id"})
+        }
+)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Table(name = "tbl_favorite_club")
+
 public class FavoriteClub {
     @Id
     @Column(name = "favorite_club_id")
