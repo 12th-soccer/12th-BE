@@ -1,4 +1,4 @@
-package com.example.be12th.domain.club.presentation.dto;
+package com.example.be12th.domain.club.presentation.dto.response;
 
 import com.example.be12th.domain.club.domain.Club;
 import lombok.AllArgsConstructor;

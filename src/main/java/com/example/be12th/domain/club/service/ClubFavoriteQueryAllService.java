@@ -1,6 +1,6 @@
 package com.example.be12th.domain.club.service;
 
-import com.example.be12th.domain.club.presentation.dto.ClubFavoriteResponse;
+import com.example.be12th.domain.club.presentation.dto.response.ClubFavoriteResponse;
 import com.example.be12th.domain.favorite.domain.FavoriteClub;
 import com.example.be12th.domain.favorite.domain.repository.FavoriteClubRepository;
 import com.example.be12th.domain.user.domain.User;
