@@ -13,7 +13,7 @@ public class PlayerSearchResponse {
     public static PlayerSearchResponse from(Player player) {
         return new PlayerSearchResponse(
                 player.getId(),
-                player.getName()
+                player.getName().trim()
         );
     }
 }
