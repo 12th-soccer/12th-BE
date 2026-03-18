@@ -1,31 +1,30 @@
 package com.example.be12th.domain.favorite.domain;
 
-import com.example.be12th.domain.club.domain.Club;
+import com.example.be12th.domain.player.domain.Player;
 import com.example.be12th.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(
-        name = "tbl_favorite_club",
+        name = "tbl_favorite_player",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"user_id", "club_id"})
+                @UniqueConstraint(columnNames = {"user_id", "player_id"})
         }
 )
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Builder
-
-public class FavoriteClub {
+public class FavoritePlayer {
     @Id
-    @Column(name = "favorite_club_id" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "favorite_player_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "club_id")
-    private Club club;
+    @JoinColumn(name = "player_id")
+    private Player player;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

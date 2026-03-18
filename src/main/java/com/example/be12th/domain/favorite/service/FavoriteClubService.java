@@ -29,7 +29,7 @@ public class FavoriteClubService {
 
         final Boolean existUserAndClub = favoriteClubRepository.existsByUserAndClub(user , club);
         if (existUserAndClub) {
-            throw new RuntimeException("이미 즐겨찾기된 구단입니다..");
+            throw new RuntimeException("이미 즐겨찾기된 구단입니다.");
         }
         FavoriteClub favoriteClub =  FavoriteClub.builder()
                 .user(user)

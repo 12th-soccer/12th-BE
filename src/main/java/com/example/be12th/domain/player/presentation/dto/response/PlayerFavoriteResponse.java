@@ -6,14 +6,14 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PlayerSearchResponse {
+public class PlayerFavoriteResponse {
     private Long playerId;
-    private String name;
+    private String playerName;
 
-    public static PlayerSearchResponse from(Player player) {
-        return new PlayerSearchResponse(
+    public static PlayerFavoriteResponse from(Player player) {
+        return new PlayerFavoriteResponse(
                 player.getId(),
-                player.getName().trim()
+                player.getName()
         );
     }
 }
