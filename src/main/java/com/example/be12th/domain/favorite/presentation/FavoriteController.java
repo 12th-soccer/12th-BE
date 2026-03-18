@@ -2,6 +2,7 @@ package com.example.be12th.domain.favorite.presentation;
 
 import com.example.be12th.domain.favorite.service.FavoriteClubDeleteService;
 import com.example.be12th.domain.favorite.service.FavoriteClubService;
+import com.example.be12th.domain.favorite.service.FavoritePlayerDeleteService;
 import com.example.be12th.domain.favorite.service.FavoritePlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ public class FavoriteController {
     private final FavoriteClubService favoriteClubService;
     private final FavoriteClubDeleteService favoriteClubDeleteService;
     private final FavoritePlayerService favoritePlayerService;
+    private final FavoritePlayerDeleteService favoritePlayerDeleteService;
 
     //club
     @PostMapping("/club/{clubId}")
@@ -31,6 +33,12 @@ public class FavoriteController {
     @ResponseStatus(HttpStatus.OK)
     public void favoritePlayer(@PathVariable Long playerId) {
         favoritePlayerService.execute(playerId);
+    }
+
+    @DeleteMapping("/player/{playerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void unfavoritePlayer(@PathVariable Long playerId) {
+        favoritePlayerDeleteService.execute(playerId);
     }
 
 }

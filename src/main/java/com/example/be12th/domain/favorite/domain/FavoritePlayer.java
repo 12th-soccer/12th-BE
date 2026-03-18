@@ -5,13 +5,13 @@ import com.example.be12th.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Table(
         name = "tbl_favorite_player",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user_id", "player_id"})
         }
 )
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -29,6 +29,4 @@ public class FavoritePlayer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-
 }

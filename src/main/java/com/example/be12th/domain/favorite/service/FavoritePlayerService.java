@@ -25,7 +25,7 @@ public class FavoritePlayerService {
         Player player = playerRepository.findById(playerId)
                 .orElseThrow(() -> new RuntimeException("해당 선수를 찾을 수 없습니다."));
 
-        final Boolean existUserAndPlayer = favoritePlayerRepository.existsById(playerId);
+        final Boolean existUserAndPlayer = favoritePlayerRepository.existsByUserAndPlayer(user,player);
         if (existUserAndPlayer) {
             throw new RuntimeException("이미 즐겨찾기된 선수입니다.");
         }
