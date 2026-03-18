@@ -19,7 +19,7 @@ import lombok.*;
 
 public class FavoriteClub {
     @Id
-    @Column(name = "favorite_club_id")
+    @Column(name = "favorite_club_id" , nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
