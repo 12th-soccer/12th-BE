@@ -9,6 +9,7 @@ import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class FavoritePlayerService {
     private final PlayerRepository playerRepository;
     private final UserFacade userFacade;
 
+    @Transactional
     public void execute(Long playerId) {
         User user = userRepository.findById(userFacade.currentUserId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
