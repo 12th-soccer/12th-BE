@@ -8,6 +8,8 @@ import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +20,7 @@ public class PlayerFavoriteQueryAllService {
     private final UserRepository userRepository;
     private final UserFacade userFacade;
 
+    @Transactional(readOnly = true)
     public List<PlayerFavoriteResponse> execute() {
         User user = userRepository.findById(userFacade.currentUserId())
                 .orElseThrow(()-> new RuntimeException("유저를 찾을수없습니다."));
