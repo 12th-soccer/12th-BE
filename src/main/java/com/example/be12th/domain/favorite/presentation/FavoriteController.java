@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/favorite")
-public class FavoriteClubController {
+public class FavoriteController {
     private final FavoriteClubService favoriteClubService;
     private final FavoriteClubDeleteService favoriteClubDeleteService;
 
+    //club
     @PostMapping("/club/{clubId}")
     @ResponseStatus(HttpStatus.OK)
     public void favoriteClub(@PathVariable Long clubId) {
@@ -23,4 +24,11 @@ public class FavoriteClubController {
     public void unfavoriteClub(@PathVariable Long clubId) {
         favoriteClubDeleteService.execute(clubId);
     }
+    //player
+    @PostMapping("/player/{playerId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void favoritePlayer(@PathVariable Long playerId) {
+        favoriteClubService.execute(playerId);
+    }
+    
 }
