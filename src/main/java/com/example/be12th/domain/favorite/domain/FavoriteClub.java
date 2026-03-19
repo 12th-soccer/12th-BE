@@ -16,7 +16,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-
 public class FavoriteClub {
     @Id
     @Column(name = "favorite_club_id" , nullable = false)
