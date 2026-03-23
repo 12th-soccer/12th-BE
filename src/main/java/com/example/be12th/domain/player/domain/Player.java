@@ -33,4 +33,11 @@ public class Player {
     @JoinColumn(name = "club_id")
     private Club club;
 
+    public void update(String name, int age, int number, Position position, Club club) {
+        this.name = name;
+        this.age = age;
+        this.number = number;
+        this.position = position;
+        this.club = club;
+    }
 }
