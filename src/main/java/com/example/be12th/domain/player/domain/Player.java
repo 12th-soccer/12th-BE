@@ -16,6 +16,8 @@ public class Player {
     @Column(name = "player_id",nullable = false)
     private Long id;
 
+    private Long fotmobId;
+
     @Column(nullable = false,name = "player_name")
     private String name;
 
@@ -33,7 +35,8 @@ public class Player {
     @JoinColumn(name = "club_id")
     private Club club;
 
-    public void update(String name, int age, int number, Position position, Club club) {
+    public void update(Long fotmobId, String name, int age, int number, Position position, Club club) {
+        this.fotmobId = fotmobId;
         this.name = name;
         this.age = age;
         this.number = number;

@@ -16,4 +16,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     Optional<Club> findById(Long id);
 
     Page<Club> findByClubNameContaining(String searchKeyword, Pageable pageable);
+
+    Optional<Club> findByFotmobId(Long fotmobId);
 }

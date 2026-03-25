@@ -41,10 +41,10 @@ public class ClubService {
                         .clubLose(dto.getLosses())
                         .clubPoint(dto.getPts())
                         .stadiumName("임시경기장")
+                        .fotmobId(dto.getId())
                         .build()
                 )
                 .toList();
-
         clubRepository.saveAll(clubEntities);
     }
 }

@@ -15,6 +15,7 @@ public class FotmobService {
                 .build();
 
         this.webClient = WebClient.builder()
+                .baseUrl("https://www.fotmob.com")
                 .exchangeStrategies(strategies)
                 .build();
     }
@@ -25,6 +26,20 @@ public class FotmobService {
                 .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
                 .header("Accept", "application/json")
                 .header("Referer", "https://www.fotmob.com/")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    public String getTeamDetails(Long fotmobId) {
+        return webClient.get()
+                .uri("https://www.fotmob.com/api/data/teams?id=" + fotmobId + "&ccode3=KOR")
+                .header("User-Agent",
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
+                .header("Accept", "application/json, text/plain, */*")
+                .header("Referer", "https://www.fotmob.com/")
+                .header("Origin", "https://www.fotmob.com")
+                .header("Connection", "keep-alive")
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

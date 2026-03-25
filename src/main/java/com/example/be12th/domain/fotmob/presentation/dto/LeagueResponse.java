@@ -3,7 +3,6 @@ package com.example.be12th.domain.fotmob.presentation.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import java.util.List;
 
 @Getter

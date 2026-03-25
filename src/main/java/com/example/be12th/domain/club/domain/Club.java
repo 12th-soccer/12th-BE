@@ -15,6 +15,8 @@ public class Club {
     @Column(name = "club_id",nullable = false)
     private Long id;
 
+    private Long fotmobId;
+
     @Column(name = "club_name",nullable = false)
     private String clubName;
 
