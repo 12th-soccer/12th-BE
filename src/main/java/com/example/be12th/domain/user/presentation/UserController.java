@@ -1,6 +1,5 @@
 package com.example.be12th.domain.user.presentation;
 
-import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
 import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
