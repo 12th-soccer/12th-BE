@@ -30,5 +30,5 @@ public class GoalEntity {
 
     @Column(name = "goal_time")
     private Integer goalTime;
-    
+
 }
