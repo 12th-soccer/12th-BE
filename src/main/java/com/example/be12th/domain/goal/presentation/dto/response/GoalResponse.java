@@ -24,4 +24,4 @@ public class GoalResponse {
                 goal.getGoalType()
         );
     }
-}
+}   
