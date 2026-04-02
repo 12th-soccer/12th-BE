@@ -28,6 +28,7 @@ public class Goal {
     @Column(name = "goal_time")
     private Integer goalTime;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "goal_type")
     private GoalType goalType;
 }
