@@ -3,18 +3,15 @@ package com.example.be12th.domain.goal.domain;
 import com.example.be12th.domain.match.domain.Match;
 import com.example.be12th.domain.player.domain.Player;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Getter
 @Table(name = "tbl_goal")
-public class GoalEntity {
+public class Goal {
     @Id
     @Column(name = "goal_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,4 +28,6 @@ public class GoalEntity {
     @Column(name = "goal_time")
     private Integer goalTime;
 
+    @Column(name = "goal_type")
+    private GoalType goalType;
 }
