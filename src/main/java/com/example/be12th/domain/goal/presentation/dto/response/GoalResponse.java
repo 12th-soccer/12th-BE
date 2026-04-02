@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class GoalResponse {
     private Long id;
-    private Long PlayerId;
-    private LocalDateTime matchdate;
+    private Long playerId;
+    private LocalDateTime matchDate;
     private Integer goalTime;
     private GoalType goalType;
 
@@ -24,4 +24,4 @@ public class GoalResponse {
                 goal.getGoalType()
         );
     }
-}   
+}
