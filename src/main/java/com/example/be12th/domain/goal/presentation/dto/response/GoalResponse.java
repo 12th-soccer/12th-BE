@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 public class GoalResponse {
     private Long id;
     private Long playerId;
+    private String playerName;
     private LocalDateTime matchDate;
     private Integer goalTime;
     private GoalType goalType;
@@ -19,6 +20,7 @@ public class GoalResponse {
         return new GoalResponse(
                 goal.getId(),
                 goal.getPlayer().getId(),
+                goal.getPlayer().getName(),
                 goal.getMatch().getMatchDate(),
                 goal.getGoalTime(),
                 goal.getGoalType()
