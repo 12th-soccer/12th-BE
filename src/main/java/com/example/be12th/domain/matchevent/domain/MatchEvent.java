@@ -31,7 +31,4 @@ public class MatchEvent {
 
     @Column(name = "event_minute", nullable = false)
     private Integer eventMinute;
-
-    @Column(name = "event_description")
-    private String description;
 }
