@@ -5,7 +5,6 @@ import com.example.be12th.domain.matchevent.domain.repository.MatchEventReposito
 import com.example.be12th.domain.matchevent.presentation.dto.MatchEventResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
