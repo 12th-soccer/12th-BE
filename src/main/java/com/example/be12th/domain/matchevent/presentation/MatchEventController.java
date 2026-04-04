@@ -5,7 +5,6 @@ import com.example.be12th.domain.matchevent.service.MatctEventQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
