@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 
@@ -34,17 +35,16 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(jwtProperty.getSecretKey().getBytes());
     }
 
-    public String generateAccessToken(String accountId) {
-        return generateToken(accountId,"access", jwtProperty.getAccessExp());
+    public String generateAccessToken(String email) {
+        return generateToken(email, "access", jwtProperty.getAccessExp());
     }
 
-    public String generateRefreshToken(String accountId) {
-        String refreshToken =
-                generateToken(accountId, "refresh", jwtProperty.getRefreshExp());
+    public String generateRefreshToken(String email) {
+        String refreshToken = generateToken(email, "refresh", jwtProperty.getRefreshExp());
 
         refreshTokenRepository.save(
                 RefreshToken.builder()
-                        .accountId(accountId)
+                        .accountId(email)
                         .token(refreshToken)
                         .ttl(jwtProperty.getRefreshExp())
                         .build()
@@ -53,7 +53,7 @@ public class JwtTokenProvider {
         return refreshToken;
     }
 
-    private String generateToken(String subject,String type, Long exp) {
+    private String generateToken(String subject, String type, Long exp) {
         return Jwts.builder()
                 .setSubject(subject)
                 .setHeaderParam("type", type)
@@ -66,8 +66,9 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) {
         String bearer = request.getHeader(jwtProperty.getHeader());
         String prefix = jwtProperty.getPrefix();
+
         if (bearer != null && bearer.startsWith(prefix)) {
-            return bearer.substring(prefix.length()+1);
+            return bearer.substring(prefix.length() + 1);
         }
         return null;
     }
@@ -82,13 +83,9 @@ public class JwtTokenProvider {
                 userDetails.getAuthorities()
         );
     }
+
     public String getEmailFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        return getSubject(token);
     }
 
     public boolean validateToken(String token) {
@@ -114,4 +111,3 @@ public class JwtTokenProvider {
                 .getBody();
     }
 }
-
