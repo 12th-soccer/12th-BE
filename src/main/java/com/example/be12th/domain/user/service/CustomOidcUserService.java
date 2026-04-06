@@ -29,6 +29,9 @@ public class CustomOidcUserService extends OidcUserService {
         String email = oidcUser.getEmail();
         String name = oidcUser.getFullName();
 
+        if(email != null || email.isBlank()) {
+            throw new IllegalStateException("OIDC 제공자에서 이메일을 제공하지 않았습니다.");
+        }
         userRepository.findByEmail(email)
                 .orElseGet(() -> userRepository.saveAndFlush(
                         User.builder()
