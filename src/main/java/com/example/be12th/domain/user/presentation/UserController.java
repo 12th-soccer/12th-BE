@@ -49,9 +49,4 @@ public class UserController {
     public void logout(HttpServletRequest httpServletRequest) {
         userLogoutService.logout(httpServletRequest);
     }
-
-    @GetMapping("/login/success")
-    public Map<String, Object> success(@AuthenticationPrincipal OAuth2User user) {
-        return user.getAttributes();
-    }
 }
