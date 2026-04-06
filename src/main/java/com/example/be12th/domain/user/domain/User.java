@@ -18,7 +18,10 @@ public class User {
     @Column(name = "email", nullable = false, unique = true , length = 100)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "name",length = 100)
+    private String name;
+
+    @Column(name = "password",nullable = false)
     private String password;
     
 }
