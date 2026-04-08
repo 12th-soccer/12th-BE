@@ -1,5 +1,6 @@
 package com.example.be12th.domain.club.domain;
 
+import com.example.be12th.domain.league.LeagueType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,9 @@ public class Club {
     private Long id;
 
     private Long fotmobId;
+
+    @Enumerated(EnumType.STRING)
+    private LeagueType leagueType;
 
     @Column(name = "club_name",nullable = false)
     private String clubName;

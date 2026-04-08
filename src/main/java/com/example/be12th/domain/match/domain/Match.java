@@ -1,6 +1,7 @@
 package com.example.be12th.domain.match.domain;
 
 import com.example.be12th.domain.club.domain.Club;
+import com.example.be12th.domain.league.LeagueType;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,9 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "match_id", nullable = false)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private LeagueType leagueType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "home_club_id")
