@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PlayerResponse {
     private Long playerId;
+    private String playerImageUrl;
     private String name;
     private int age;
     private Position position;
@@ -19,6 +20,7 @@ public class PlayerResponse {
         return new PlayerResponse(
           player.getId(),
                 player.getName(),
+                player.getPlayerImageUrl(),
                 player.getAge(),
                 player.getPosition(),
                 player.getNumber(),

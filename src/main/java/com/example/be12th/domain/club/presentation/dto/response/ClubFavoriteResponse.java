@@ -8,11 +8,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ClubFavoriteResponse {
     private Long clubId;
+    private String clubImageUrl;
     private String clubName;
 
     public static ClubFavoriteResponse from(Club club) {
         return new ClubFavoriteResponse(
                 club.getId(),
+                club.getClubImageUrl(),
                 club.getClubName()
         );
     }
