@@ -18,6 +18,5 @@ public class ClubSearchService {
         return clubRepository
                 .findByClubNameContaining(keyword, pageable)
                 .map(ClubSearchResponse::from);
-
     }
 }
