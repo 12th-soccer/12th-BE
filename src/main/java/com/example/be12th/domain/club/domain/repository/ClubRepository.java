@@ -1,6 +1,7 @@
 package com.example.be12th.domain.club.domain.repository;
 
 import com.example.be12th.domain.club.domain.Club;
+import com.example.be12th.domain.league.LeagueType;
 import com.example.be12th.domain.player.domain.Player;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,4 +19,6 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
     Page<Club> findByClubNameContaining(String searchKeyword, Pageable pageable);
 
     Optional<Club> findByFotmobId(Long fotmobId);
+
+    List<Club> findByLeagueTypeOrderByClubPointDesc(LeagueType leagueType);
 }

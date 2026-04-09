@@ -1,6 +1,7 @@
 package com.example.be12th.domain.club.presentation.dto.response;
 
 import com.example.be12th.domain.club.domain.Club;
+import com.example.be12th.domain.league.LeagueType;
 import com.example.be12th.domain.match.domain.Match;
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClubResponse {
     private Long clubId;
+    private LeagueType leagueType;
     private String clubName;
     private String stadiumName;
     private List<MatchResponse> matches;
@@ -24,6 +26,7 @@ public class ClubResponse {
 
         return new ClubResponse(
                 club.getId(),
+                club.getLeagueType(),
                 club.getClubName(),
                 club.getStadiumName(),
                 matchResponses
