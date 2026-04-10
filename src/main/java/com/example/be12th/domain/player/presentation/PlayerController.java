@@ -33,6 +33,7 @@ public class PlayerController {
     public Page<PlayerSearchResponse> search(@RequestParam String keyword, Pageable pageable){
         return playerSearchService.execute(keyword,pageable);
     }
+    
     @GetMapping("/favorite")
     @ResponseStatus(HttpStatus.OK)
     public List<PlayerFavoriteResponse> favorite(){

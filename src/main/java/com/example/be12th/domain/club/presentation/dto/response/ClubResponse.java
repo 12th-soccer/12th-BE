@@ -13,6 +13,7 @@ import java.util.List;
 public class ClubResponse {
     private Long clubId;
     private LeagueType leagueType;
+    private String clubImageUrl;
     private String clubName;
     private String stadiumName;
     private List<MatchResponse> matches;
@@ -27,6 +28,7 @@ public class ClubResponse {
         return new ClubResponse(
                 club.getId(),
                 club.getLeagueType(),
+                club.getClubImageUrl(),
                 club.getClubName(),
                 club.getStadiumName(),
                 matchResponses

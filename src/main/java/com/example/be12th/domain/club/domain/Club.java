@@ -18,6 +18,9 @@ public class Club {
 
     private Long fotmobId;
 
+    @Column(name = "club_image_url")
+    private String clubImageUrl;
+
     @Enumerated(EnumType.STRING)
     private LeagueType leagueType;
 

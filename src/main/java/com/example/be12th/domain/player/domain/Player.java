@@ -18,6 +18,9 @@ public class Player {
 
     private Long fotmobId;
 
+    @Column(name = "player_image_url")
+    private String playerImageUrl;
+
     @Column(nullable = false,name = "player_name")
     private String name;
 
