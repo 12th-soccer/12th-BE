@@ -4,10 +4,8 @@ import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
 import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
 import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
-import com.example.be12th.domain.user.service.UserCheckMailSignupService;
-import com.example.be12th.domain.user.service.UserLoginService;
-import com.example.be12th.domain.user.service.UserLogoutService;
-import com.example.be12th.domain.user.service.UserMailService;
+import com.example.be12th.domain.user.presentation.dto.response.UserResponse;
+import com.example.be12th.domain.user.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +20,17 @@ public class UserController {
     private final UserMailService userMailService;
     private final UserLoginService userLoginService;
     private final UserLogoutService userLogoutService;
+    private final UserInfoService userInfoService;
 
     @PostMapping("/email")
     @ResponseStatus(HttpStatus.OK)
     public void sendEmail(@RequestBody EmailRequest emailRequest) {
         userMailService.execute(emailRequest);
+    }
+
+    @GetMapping("/info")
+    public UserResponse getUserInfo(@RequestHeader("Authorization") String authorizationHeader) {
+        return userInfoService.execute(authorizationHeader);
     }
 
     @PostMapping("/verify/signup")
