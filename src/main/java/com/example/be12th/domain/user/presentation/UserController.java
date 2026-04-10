@@ -29,10 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-<<<<<<< HEAD
     @ResponseStatus(HttpStatus.OK)
-=======
->>>>>>> origin/refactor/12th-code
     public UserResponse getUserInfo(@RequestHeader("Authorization") String authorizationHeader) {
         return userInfoService.execute(authorizationHeader);
     }
