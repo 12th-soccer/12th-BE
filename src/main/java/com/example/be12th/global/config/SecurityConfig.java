@@ -32,14 +32,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/user/verify/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                         .requestMatchers("/", "/login/**", "/oauth2/**", "/user/login/success").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user/info").authenticated()
 
                         //ranking
                         .requestMatchers(HttpMethod.GET, "/ranking").authenticated()
 
                         //club
                         .requestMatchers(HttpMethod.GET, "/club/{clubId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/club/favorite").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/club/search").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/club/favorite").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/club/search").permitAll()
 
                         //match
                         .requestMatchers(HttpMethod.GET, "/match/{matchId}").authenticated()
@@ -47,8 +48,8 @@ public class SecurityConfig {
 
                         //player
                         .requestMatchers(HttpMethod.GET, "/player/{playerId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/player/interest").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/player/search").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/player/interest").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/player/search").permitAll()
 
                         //favorite
                         .requestMatchers(HttpMethod.POST, "/favorite/player/{playerId}").authenticated()
