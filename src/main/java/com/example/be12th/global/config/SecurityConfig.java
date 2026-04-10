@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/user/verify/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                         .requestMatchers("/", "/login/**", "/oauth2/**", "/user/login/success").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user/info").authenticated()
 
                         //ranking
                         .requestMatchers(HttpMethod.GET, "/ranking").authenticated()
