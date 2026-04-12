@@ -8,11 +8,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PlayerSearchResponse {
     private Long playerId;
+    private String playerImage;
     private String name;
 
     public static PlayerSearchResponse from(Player player) {
         return new PlayerSearchResponse(
                 player.getId(),
+                player.getPlayerImageUrl(),
                 player.getName().trim()
         );
     }
