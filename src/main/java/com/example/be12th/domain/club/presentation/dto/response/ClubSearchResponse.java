@@ -8,11 +8,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ClubSearchResponse {
     private Long clubId;
+    private String clubImageUrl;
     private String clubName;
 
     public static ClubSearchResponse from(Club club) {
         return new ClubSearchResponse(
                 club.getId(),
+                club.getClubImageUrl(),
                 club.getClubName()
         );
     }

@@ -9,6 +9,7 @@ import lombok.Getter;
 public class RankingResponse {
     private Long clubId;
     private String clubName;
+    private String clubImage;
     private Integer win;
     private Integer lose;
     private Integer draw;
@@ -18,6 +19,7 @@ public class RankingResponse {
         return new RankingResponse(
         club.getId(),
         club.getClubName(),
+        club.getClubImageUrl(),
         club.getClubWin(),
         club.getClubLose(),
         club.getClubDraw(),

@@ -14,7 +14,9 @@ public class MatchResponse {
     private LeagueType leagueType;
     private LocalDateTime matchDate;
     private String homeTeamName;
+    private String homeTeamImageUrl;
     private String awayTeamName;
+    private String awayTeamImageUrl;
     private Integer homeTeamScore;
     private Integer awayTeamScore;
 
@@ -25,7 +27,9 @@ public class MatchResponse {
                 match.getLeagueType(),
                 match.getMatchDate(),
                 match.getHomeClub().getClubName(),
+                match.getHomeClub().getClubImageUrl(),
                 match.getAwayClub().getClubName(),
+                match.getAwayClub().getClubImageUrl(),
                 match.getHomeScore(),
                 match.getAwayScore()
         );
