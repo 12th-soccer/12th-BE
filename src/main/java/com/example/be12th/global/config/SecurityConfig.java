@@ -62,6 +62,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/goal/{playerId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/event/{matchId}").authenticated()
 
+                        //fcm
+                        .requestMatchers(HttpMethod.GET, "/notifications/settings").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/notifications/settings").authenticated()
+
                         .anyRequest().permitAll()
                 )
 

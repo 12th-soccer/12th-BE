@@ -45,3 +45,6 @@ jwt:
   refresh-exp: 1209600000  # 14일
   header: Authorization
   prefix: Bearer
+
+firebase:
+  config-path: /home/ubuntu/firebase/firebase-service-key.json
