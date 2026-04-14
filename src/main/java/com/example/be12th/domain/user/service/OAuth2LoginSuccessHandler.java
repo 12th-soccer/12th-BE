@@ -14,6 +14,8 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
@@ -41,15 +43,11 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             session.invalidate();
         }
 
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().write(
-                """
-                {
-                  "accessToken": "%s",
-                  "refreshToken": "%s",
-                  "email": "%s"
-                }
-                """.formatted(accessToken, refreshToken, user.getEmail())
-        );
+        String redirectUrl = "twelfth://oauth-callback"
+                + "?accessToken=" + URLEncoder.encode(accessToken, StandardCharsets.UTF_8)
+                + "&refreshToken=" + URLEncoder.encode(refreshToken, StandardCharsets.UTF_8)
+                + "&email=" + URLEncoder.encode(email, StandardCharsets.UTF_8);
+
+        response.sendRedirect(redirectUrl);
     }
 }
