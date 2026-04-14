@@ -1,5 +1,6 @@
 package com.example.be12th.domain.user.service;
 
+import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class UserMailService {
     private final JavaMailSender javaMailSender;
     private final RedisTemplate<String, String> redisTemplate;
+    private final UserRepository userRepository;
     @Value("${spring.mail.username}")
     private String senderEmail;
 
@@ -29,6 +31,10 @@ public class UserMailService {
     }
     @Transactional
     public void execute(EmailRequest emailRequest){
+        if (userRepository.existsByEmail(emailRequest.getEmail())) {
+            throw new RuntimeException("이미 회원가입된 이메일입니다.");
+        }
+
         String verified = redisTemplate.opsForValue().get(emailRequest.getEmail()+"verified");
 
         if(verified == null){
