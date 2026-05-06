@@ -2,7 +2,7 @@ package com.example.be12th.domain.match.presentation;
 
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
 import com.example.be12th.domain.match.service.CaleanderQueryService;
-import com.example.be12th.domain.match.service.MatchQueryService;
+import com.example.be12th.domain.match.service.sfdsafdsa;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/match")
-public class MatchController {
+public class MatcsdfdsfsfhController {
 
-    private final MatchQueryService matchQueryService;
+    private final sfdsafdsa matchQueryService;
     private final CaleanderQueryService caleanderQueryService;
 
     @GetMapping("/{matchId}")

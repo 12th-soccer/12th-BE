@@ -1,22 +1,39 @@
 package com.example.be12th.domain.footballapi.presentation.dto.response;
 
+import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
+
 public record MatchListResponse(
-        Long fixtureId,
-        Long leagueId,
-        String leagueName,
-        String leagueLogo,
+        Long matchId,
+        String leagueType,
         String matchDate,
-        String statusCode,
-        Long venueId,
-        String venueName,
-        String venueCity,
-        Long homeTeamId,
         String homeTeamName,
-        String homeTeamLogo,
-        Long awayTeamId,
+        String homeTeamImageUrl,
         String awayTeamName,
-        String awayTeamLogo,
-        Integer homeScore,
-        Integer awayScore
+        String awayTeamImageUrl,
+        Integer homeTeamScore,
+        Integer awayTeamScore
 ) {
+    public static MatchListResponse from(FixtureItem item) {
+        return new MatchListResponse(
+                item.fixture().id(),
+                convertLeagueType(item.league().id()),
+                item.fixture().date(),
+                item.teams().home().name(),
+                item.teams().home().logo(),
+                item.teams().away().name(),
+                item.teams().away().logo(),
+                item.goals().home(),
+                item.goals().away()
+        );
+    }
+
+    private static String convertLeagueType(Long leagueId) {
+        if (leagueId.equals(292L)) {
+            return "K1";
+        }
+        if (leagueId.equals(293L)) {
+            return "K2";
+        }
+        return "UNKNOWN";
+    }
 }

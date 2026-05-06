@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class MatchQueryService {
+public class sfdsafdsa {
     private final MatchRepository matchRepository;
 
     @Transactional(readOnly = true)

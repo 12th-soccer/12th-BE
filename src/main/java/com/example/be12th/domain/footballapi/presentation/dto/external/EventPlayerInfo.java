@@ -1,9 +1,7 @@
 package com.example.be12th.domain.footballapi.presentation.dto.external;
 
-public record TeamInfo(
+public record EventPlayerInfo(
         Long id,
-        String name,
-        String logo,
-        Boolean winner
+        String name
 ) {
 }
