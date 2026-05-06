@@ -1,4 +1,4 @@
-package com.example.be12th.domain.footballapi.service;
+package com.example.be12th.domain.footballapi.client;
 
 import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerApiResponse;
 import com.example.be12th.domain.footballapi.presentation.dto.external.TeamApiResponse;

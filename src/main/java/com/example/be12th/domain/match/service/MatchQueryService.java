@@ -3,11 +3,10 @@ package com.example.be12th.domain.match.service;
 import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureApiResponse;
 import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
-import com.example.be12th.domain.footballapi.service.FootballClient;
-import com.example.be12th.domain.footballapi.service.KLeagueConstants;
+import com.example.be12th.domain.footballapi.client.FootballClient;
+import com.example.be12th.domain.footballapi.support.KLeagueConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

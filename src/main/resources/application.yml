@@ -47,7 +47,7 @@ jwt:
   prefix: Bearer
 
 #firebase:
-#  config-path: /home/ubuntu/firebase/firebase-service-key.json
+#  config-path: /home/ubuntu/firebase/firebase-service-key.jsonx
 firebase:
   enabled: false
 

@@ -7,8 +7,8 @@ import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerSqu
 import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerSquadItem;
 import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerStatisticItem;
 import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
-import com.example.be12th.domain.footballapi.service.FootballClient;
-import com.example.be12th.domain.footballapi.service.KLeagueConstants;
+import com.example.be12th.domain.footballapi.client.FootballClient;
+import com.example.be12th.domain.footballapi.support.KLeagueConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +36,7 @@ public class PlayerQueryService {
     public List<PlayerResponse> getKLeague2Players(int season, int page) {
         return getPlayersByLeague(KLeagueConstants.KLEAGUE2_ID, season, page);
     }
+
 
     private List<PlayerResponse> getPlayersByLeague(Long leagueId, int season, int page) {
         PlayerApiResponse result = footballClient.getPlayersByLeague(leagueId, season, page);

@@ -6,7 +6,7 @@ import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureAp
 import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
 import com.example.be12th.domain.footballapi.presentation.dto.external.LineupApiResponse;
 import com.example.be12th.domain.footballapi.presentation.dto.external.LineupItem;
-import com.example.be12th.domain.footballapi.service.FootballClient;
+import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.match.presentation.dto.response.LineupResponse;
 import com.example.be12th.domain.match.presentation.dto.response.MatchDetailResponse;
 import com.example.be12th.domain.match.presentation.dto.response.MatchEventResponse;

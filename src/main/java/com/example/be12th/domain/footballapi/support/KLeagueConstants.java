@@ -1,4 +1,4 @@
-package com.example.be12th.domain.footballapi.service;
+package com.example.be12th.domain.footballapi.support;
 
 public final class KLeagueConstants {
 
