@@ -48,6 +48,8 @@ jwt:
 
 #firebase:
 #  config-path: /home/ubuntu/firebase/firebase-service-key.json
+firebase:
+  enabled: false
 
 api:
   football:

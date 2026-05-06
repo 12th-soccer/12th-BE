@@ -1,15 +1,8 @@
 package com.example.be12th.domain.player.presentation;
 
-import com.example.be12th.domain.player.presentation.dto.response.PlayerFavoriteResponse;
 import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
-import com.example.be12th.domain.player.presentation.dto.response.PlayerSearchResponse;
-import com.example.be12th.domain.player.service.PlayerFavoriteQueryAllService;
-import com.example.be12th.domain.player.service.asdf;
-import com.example.be12th.domain.player.service.PlayerSearchService;
+import com.example.be12th.domain.player.service.PlayerQueryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,25 +11,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/player")
 public class PlayerController {
-    private final asdf playerQueryService;
-    private final PlayerSearchService playerSearchService;
-    private final PlayerFavoriteQueryAllService playerFavoriteQueryAllService;
+    private PlayerQueryService playerQueryService;
 
-    @GetMapping("/{playerId}")
-    @ResponseStatus(HttpStatus.OK)
-    public PlayerResponse query(@PathVariable Long playerId){
-        return playerQueryService.execute(playerId);
+    @GetMapping("/players/{playerId}")
+    public PlayerResponse getPlayerById(@PathVariable Long playerId, @RequestParam int season) {
+        return playerQueryService.execute(playerId, season);
     }
 
-    @GetMapping("/search")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<PlayerSearchResponse> search(@RequestParam String keyword, Pageable pageable){
-        return playerSearchService.execute(keyword,pageable);
+    @GetMapping("/players/kleague1")
+    public List<PlayerResponse> getKLeague1Players(@RequestParam int season, @RequestParam(defaultValue = "1") int page) {
+        return playerQueryService.getKLeague1Players(season, page);
     }
-    
-    @GetMapping("/favorite")
-    @ResponseStatus(HttpStatus.OK)
-    public List<PlayerFavoriteResponse> favorite(){
-        return playerFavoriteQueryAllService.execute();
+
+    @GetMapping("/players/kleague2")
+    public List<PlayerResponse> getKLeague2Players(@RequestParam int season, @RequestParam(defaultValue = "1") int page) {
+        return playerQueryService.getKLeague2Players(season, page);
     }
 }

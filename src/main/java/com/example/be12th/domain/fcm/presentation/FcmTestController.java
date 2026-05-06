@@ -4,6 +4,7 @@ import com.example.be12th.domain.fcm.domain.repository.FcmRepository;
 import com.example.be12th.domain.fcm.service.FcmService;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/fcm/test")
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "firebase.enabled", havingValue = "true")
 public class FcmTestController {
 
     private final FcmRepository fcmRepository;

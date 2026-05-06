@@ -63,6 +63,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/event/{matchId}").authenticated()
 
                         //fcm
+                        .requestMatchers(HttpMethod.POST, "/fcm/tokens").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/fcm/test").authenticated()
                         .requestMatchers(HttpMethod.GET, "/notifications/settings").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/notifications/settings").authenticated()
 

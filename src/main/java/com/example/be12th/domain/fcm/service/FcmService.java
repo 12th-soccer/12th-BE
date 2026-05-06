@@ -3,9 +3,11 @@ package com.example.be12th.domain.fcm.service;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 @Service
+@ConditionalOnProperty(name = "firebase.enabled", havingValue = "true")
 public class FcmService {
     public void sendMessage(String token, String title, String body) {
         try {
