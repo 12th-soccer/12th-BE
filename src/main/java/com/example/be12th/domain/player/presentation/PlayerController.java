@@ -4,7 +4,7 @@ import com.example.be12th.domain.player.presentation.dto.response.PlayerFavorite
 import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
 import com.example.be12th.domain.player.presentation.dto.response.PlayerSearchResponse;
 import com.example.be12th.domain.player.service.PlayerFavoriteQueryAllService;
-import com.example.be12th.domain.player.service.PlayerQueryService;
+import com.example.be12th.domain.player.service.asdf;
 import com.example.be12th.domain.player.service.PlayerSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/player")
 public class PlayerController {
-    private final PlayerQueryService playerQueryService;
+    private final asdf playerQueryService;
     private final PlayerSearchService playerSearchService;
     private final PlayerFavoriteQueryAllService playerFavoriteQueryAllService;
 
