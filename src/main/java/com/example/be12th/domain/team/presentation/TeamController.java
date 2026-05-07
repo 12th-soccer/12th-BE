@@ -13,17 +13,17 @@ import java.util.List;
 public class TeamController {
     private final TeamQueryService teamQueryService;
 
-    @GetMapping("/teams/{teamId}")
+    @GetMapping("/{teamId}")
     public TeamResponse getTeamById(@PathVariable Long teamId) {
         return teamQueryService.execute(teamId);
     }
 
-    @GetMapping("/teams/kleague1")
+    @GetMapping("/kleague1")
     public List<TeamResponse> getKLeague1Teams(@RequestParam int season) {
         return teamQueryService.getKLeague1Teams(season);
     }
 
-    @GetMapping("/teams/kleague2")
+    @GetMapping("/kleague2")
     public List<TeamResponse> getKLeague2Teams(@RequestParam int season) {
         return teamQueryService.getKLeague2Teams(season);
     }
