@@ -4,12 +4,7 @@ import com.example.be12th.domain.favorite.presnetation.dto.response.FavoritePlay
 import com.example.be12th.domain.favorite.presnetation.dto.response.FavoriteTeamResponse;
 import com.example.be12th.domain.favorite.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,7 +38,7 @@ public class FavoriteTeamController {
     }
 
     @PostMapping("/player/{playerId}")
-    public void favoritePlayer(@PathVariable Long playerId,int season) {
+    public void favoritePlayer(@PathVariable Long playerId,@RequestParam int season) {
         favoritePlayerService.execute(playerId,season);
     }
 
