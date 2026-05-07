@@ -4,14 +4,14 @@ import com.example.be12th.domain.favorite.domain.FavoriteTeam;
 
 public record FavoriteTeamResponse(
         Long teamId,
-        String teamImageUrl,
-        String teamName
+        String teamName,
+        String teamImageUrl
 ) {
     public static FavoriteTeamResponse from(FavoriteTeam favoriteTeam) {
         return new FavoriteTeamResponse(
                 favoriteTeam.getTeamId(),
-                favoriteTeam.getTeamLogo(),
-                favoriteTeam.getTeamName()
+                favoriteTeam.getTeamName(),
+                favoriteTeam.getTeamLogo()
         );
     }
 }

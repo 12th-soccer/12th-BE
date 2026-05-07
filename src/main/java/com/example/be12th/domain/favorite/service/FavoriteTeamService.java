@@ -24,7 +24,7 @@ public class FavoriteTeamService {
         Long userId = userFacade.currentUserId();
 
         if (favoriteTeamRepository.existsByUserIdAndTeamId(userId, teamId)) {
-            return;
+            throw new RuntimeException("이미 즐겨찾기된 구단입니다.");
         }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
