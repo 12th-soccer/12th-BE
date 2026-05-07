@@ -26,7 +26,7 @@ public class PlayerQueryService {
             return null;
         }
 
-        return toPlayerResponse(result.response().get(0));
+        return toPlayerResponse(result.response().get(0), true);
     }
 
     public List<PlayerResponse> getKLeague1Players(int season, int page) {
@@ -46,19 +46,19 @@ public class PlayerQueryService {
         }
 
         return result.response().stream()
-                .map(this::toPlayerResponse)
+                .map(item -> toPlayerResponse(item, false))
                 .filter(player -> player != null && player.teamId() != null)
                 .toList();
     }
 
-    private PlayerResponse toPlayerResponse(PlayerItem item) {
+    private PlayerResponse toPlayerResponse(PlayerItem item, boolean includeSquadInfo) {
         if (item == null || item.player() == null) {
             return null;
         }
 
         PlayerStatisticItem statistic = pickStatistic(item.statistics());
         Long teamId = statistic == null || statistic.team() == null ? null : statistic.team().id();
-        PlayerSquadInfo squadInfo = findSquadInfo(teamId, item.player().id());
+        PlayerSquadInfo squadInfo = includeSquadInfo ? findSquadInfo(teamId, item.player().id()) : null;
         Integer number = squadInfo != null && squadInfo.number() != null
                 ? squadInfo.number()
                 : statistic == null || statistic.games() == null ? null : statistic.games().number();

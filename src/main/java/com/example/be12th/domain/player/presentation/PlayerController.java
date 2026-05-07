@@ -11,19 +11,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/player")
 public class PlayerController {
-    private PlayerQueryService playerQueryService;
+    private final PlayerQueryService playerQueryService;
 
-    @GetMapping("/players/{playerId}")
+    @GetMapping("/{playerId}")
     public PlayerResponse getPlayerById(@PathVariable Long playerId, @RequestParam int season) {
         return playerQueryService.execute(playerId, season);
     }
 
-    @GetMapping("/players/kleague1")
+    @GetMapping("/kleague1")
     public List<PlayerResponse> getKLeague1Players(@RequestParam int season, @RequestParam(defaultValue = "1") int page) {
         return playerQueryService.getKLeague1Players(season, page);
     }
 
-    @GetMapping("/players/kleague2")
+    @GetMapping("/kleague2")
     public List<PlayerResponse> getKLeague2Players(@RequestParam int season, @RequestParam(defaultValue = "1") int page) {
         return playerQueryService.getKLeague2Players(season, page);
     }
