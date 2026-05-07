@@ -7,6 +7,7 @@ import com.example.be12th.domain.footballapi.presentation.dto.external.EventApiR
 import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureApiResponse;
 import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
 import com.example.be12th.domain.footballapi.presentation.dto.external.LineupApiResponse;
+import com.example.be12th.domain.ranking.presentation.dto.StandingApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -143,4 +144,15 @@ public class FootballClient {
 
         return result.response();
     }
+    public StandingApiResponse getStandings(Long leagueId, int season) {
+        return apiFootballRestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/standings")
+                        .queryParam("league", leagueId)
+                        .queryParam("season", season)
+                        .build())
+                .retrieve()
+                .body(StandingApiResponse.class);
+    }
+
 }
