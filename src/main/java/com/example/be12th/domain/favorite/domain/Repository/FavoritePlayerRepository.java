@@ -1,6 +1,7 @@
 package com.example.be12th.domain.favorite.domain.Repository;
 
 import com.example.be12th.domain.favorite.domain.FavoritePlayer;
+import com.example.be12th.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface FavoritePlayerRepository extends JpaRepository<FavoritePlayer, 
     boolean existsByUserIdAndPlayerId(Long userId, Long playerId);
     Optional<FavoritePlayer> findByUserIdAndPlayerId(Long userId, Long playerId);
     List<FavoritePlayer> findAllByUserId(Long userId);
+
+    Long user(User user);
 }
