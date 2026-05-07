@@ -1,6 +1,6 @@
 package com.example.be12th.domain.goal.presentation;
 
-import com.example.be12th.domain.goal.presentation.dto.PlayerGoalResponse;
+import com.example.be12th.domain.goal.presentation.dto.response.PlayerGoalResponse;
 import com.example.be12th.domain.goal.service.GoalQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

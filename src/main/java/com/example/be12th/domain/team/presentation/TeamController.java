@@ -1,6 +1,6 @@
 package com.example.be12th.domain.team.presentation;
 
-import com.example.be12th.domain.team.presentation.dto.TeamResponse;
+import com.example.be12th.domain.team.presentation.dto.response.TeamResponse;
 import com.example.be12th.domain.team.service.TeamQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

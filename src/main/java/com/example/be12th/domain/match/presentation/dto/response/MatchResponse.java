@@ -1,6 +1,6 @@
 package com.example.be12th.domain.match.presentation.dto.response;
 
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
+import com.example.be12th.domain.footballapi.dto.external.FixtureItem;
 
 public record MatchResponse(
         Long matchId,

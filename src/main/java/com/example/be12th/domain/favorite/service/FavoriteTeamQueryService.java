@@ -1,7 +1,7 @@
 package com.example.be12th.domain.favorite.service;
 
 import com.example.be12th.domain.favorite.domain.Repository.FavoriteTeamRepository;
-import com.example.be12th.domain.favorite.presnetation.dto.response.FavoriteTeamResponse;
+import com.example.be12th.domain.favorite.presentation.dto.response.FavoriteTeamResponse;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

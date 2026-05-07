@@ -1,13 +1,13 @@
 package com.example.be12th.domain.footballapi.client;
 
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.TeamApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerSquadApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.EventApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
-import com.example.be12th.domain.footballapi.presentation.dto.external.LineupApiResponse;
-import com.example.be12th.domain.ranking.presentation.dto.StandingApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.EventApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.FixtureApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.FixtureItem;
+import com.example.be12th.domain.footballapi.dto.external.LineupApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.PlayerApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.PlayerSquadApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.TeamApiResponse;
+import com.example.be12th.domain.ranking.presentation.dto.external.StandingApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;

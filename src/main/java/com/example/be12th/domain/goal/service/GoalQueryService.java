@@ -1,9 +1,11 @@
 package com.example.be12th.domain.goal.service;
 
 import com.example.be12th.domain.footballapi.client.FootballClient;
-import com.example.be12th.domain.footballapi.presentation.dto.external.*;
+import com.example.be12th.domain.footballapi.dto.external.PlayerApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.PlayerItem;
+import com.example.be12th.domain.footballapi.dto.external.PlayerStatisticItem;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;
-import com.example.be12th.domain.goal.presentation.dto.PlayerGoalResponse;
+import com.example.be12th.domain.goal.presentation.dto.response.PlayerGoalResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

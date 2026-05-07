@@ -1,7 +1,7 @@
 package com.example.be12th.domain.match.service;
 
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
+import com.example.be12th.domain.footballapi.dto.external.FixtureApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.FixtureItem;
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
 import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;

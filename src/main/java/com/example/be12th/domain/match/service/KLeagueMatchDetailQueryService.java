@@ -1,11 +1,11 @@
 package com.example.be12th.domain.match.service;
 
-import com.example.be12th.domain.footballapi.presentation.dto.external.EventApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.EventItem;
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
-import com.example.be12th.domain.footballapi.presentation.dto.external.LineupApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.LineupItem;
+import com.example.be12th.domain.footballapi.dto.external.EventApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.EventItem;
+import com.example.be12th.domain.footballapi.dto.external.FixtureApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.FixtureItem;
+import com.example.be12th.domain.footballapi.dto.external.LineupApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.LineupItem;
 import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.match.presentation.dto.response.LineupResponse;
 import com.example.be12th.domain.match.presentation.dto.response.MatchDetailResponse;

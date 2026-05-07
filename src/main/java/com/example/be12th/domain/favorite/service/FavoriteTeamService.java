@@ -2,7 +2,7 @@ package com.example.be12th.domain.favorite.service;
 
 import com.example.be12th.domain.favorite.domain.FavoriteTeam;
 import com.example.be12th.domain.favorite.domain.Repository.FavoriteTeamRepository;
-import com.example.be12th.domain.team.presentation.dto.TeamResponse;
+import com.example.be12th.domain.team.presentation.dto.response.TeamResponse;
 import com.example.be12th.domain.team.service.TeamQueryService;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;

@@ -1,6 +1,6 @@
 package com.example.be12th.domain.ranking.presentation;
 
-import com.example.be12th.domain.ranking.presentation.dto.RankingResponse;
+import com.example.be12th.domain.ranking.presentation.dto.response.RankingResponse;
 import com.example.be12th.domain.ranking.service.RankingQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,8 +2,8 @@ package com.example.be12th.domain.ranking.service;
 
 import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;
-import com.example.be12th.domain.ranking.presentation.dto.RankingResponse;
-import com.example.be12th.domain.ranking.presentation.dto.StandingApiResponse;
+import com.example.be12th.domain.ranking.presentation.dto.external.StandingApiResponse;
+import com.example.be12th.domain.ranking.presentation.dto.response.RankingResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

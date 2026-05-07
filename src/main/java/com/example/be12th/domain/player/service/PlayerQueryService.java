@@ -1,11 +1,11 @@
 package com.example.be12th.domain.player.service;
 
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerItem;
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerSquadApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerSquadInfo;
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerSquadItem;
-import com.example.be12th.domain.footballapi.presentation.dto.external.PlayerStatisticItem;
+import com.example.be12th.domain.footballapi.dto.external.PlayerApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.PlayerItem;
+import com.example.be12th.domain.footballapi.dto.external.PlayerSquadApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.PlayerSquadInfo;
+import com.example.be12th.domain.footballapi.dto.external.PlayerSquadItem;
+import com.example.be12th.domain.footballapi.dto.external.PlayerStatisticItem;
 import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
 import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;

@@ -1,8 +1,8 @@
 package com.example.be12th.domain.team.service;
 
-import com.example.be12th.domain.footballapi.presentation.dto.external.TeamApiResponse;
-import com.example.be12th.domain.footballapi.presentation.dto.external.TeamDetailItem;
-import com.example.be12th.domain.team.presentation.dto.TeamResponse;
+import com.example.be12th.domain.footballapi.dto.external.TeamApiResponse;
+import com.example.be12th.domain.footballapi.dto.external.TeamDetailItem;
+import com.example.be12th.domain.team.presentation.dto.response.TeamResponse;
 import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;
 import lombok.RequiredArgsConstructor;
