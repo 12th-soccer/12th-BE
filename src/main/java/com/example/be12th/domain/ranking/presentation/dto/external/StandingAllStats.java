@@ -4,7 +4,6 @@ public record StandingAllStats(
         Integer played,
         Integer win,
         Integer draw,
-        Integer lose,
-        StandingGoalsStats goals
+        Integer lose
 ) {
 }
