@@ -7,4 +7,12 @@ public final class KLeagueConstants {
 
     private KLeagueConstants() {
     }
+
+    public static Long resolveLeagueId(String league) {
+        return switch (league.toLowerCase()){
+            case "kleague1" -> KLEAGUE1_ID;
+            case "kleague2" -> KLEAGUE2_ID;
+            default -> throw new IllegalArgumentException("지원하지 않는 리그입니다." + league);
+        };
+    }
 }
