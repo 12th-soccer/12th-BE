@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-public class ApiFootbalConfig{
+public class ApiFootballConfig {
 
     @Value("${api.football.key}")
     private String apiKey;
