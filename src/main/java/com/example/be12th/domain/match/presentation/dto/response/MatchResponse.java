@@ -1,37 +1,27 @@
 package com.example.be12th.domain.match.presentation.dto.response;
 
-import com.example.be12th.domain.league.LeagueType;
-import com.example.be12th.domain.match.domain.Match;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
 
-import java.time.LocalDateTime;
-
-@Getter
-@AllArgsConstructor
-public class MatchResponse {
-    private Long matchId;
-    private LeagueType leagueType;
-    private LocalDateTime matchDate;
-    private String homeTeamName;
-    private String homeTeamImageUrl;
-    private String awayTeamName;
-    private String awayTeamImageUrl;
-    private Integer homeTeamScore;
-    private Integer awayTeamScore;
-
-
-    public static MatchResponse from(Match match) {
+public record MatchResponse(
+        Long matchId,
+        String matchDate,
+        String homeTeam,
+        String homeTeamLogo,
+        String awayTeam,
+        String awayTeamLogo,
+        Integer homeScore,
+        Integer awayScore
+) {
+    public static MatchResponse from(FixtureItem item) {
         return new MatchResponse(
-                match.getId(),
-                match.getLeagueType(),
-                match.getMatchDate(),
-                match.getHomeClub().getClubName(),
-                match.getHomeClub().getClubImageUrl(),
-                match.getAwayClub().getClubName(),
-                match.getAwayClub().getClubImageUrl(),
-                match.getHomeScore(),
-                match.getAwayScore()
+                item.fixture().id(),
+                item.fixture().date(),
+                item.teams().home().name(),
+                item.teams().home().logo(),
+                item.teams().away().name(),
+                item.teams().away().logo(),
+                item.goals().home(),
+                item.goals().away()
         );
     }
 }

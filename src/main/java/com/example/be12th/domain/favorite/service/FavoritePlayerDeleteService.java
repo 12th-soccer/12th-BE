@@ -1,7 +1,7 @@
 package com.example.be12th.domain.favorite.service;
 
 import com.example.be12th.domain.favorite.domain.FavoritePlayer;
-import com.example.be12th.domain.favorite.domain.repository.FavoritePlayerRepository;
+import com.example.be12th.domain.favorite.domain.Repository.FavoritePlayerRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,12 @@ public class FavoritePlayerDeleteService {
 
     @Transactional
     public void execute(Long playerId) {
-        FavoritePlayer favoritePlayer = favoritePlayerRepository.findByUserIdAndPlayerId(userFacade.currentUserId(), playerId)
-                .orElseThrow(() -> new RuntimeException("해당 관심 선수를 찾을 수 없습니다."));
-        favoritePlayerRepository.delete(favoritePlayer);
+        Long userId = userFacade.currentUserId();
+
+        FavoritePlayer favoritePlayer = favoritePlayerRepository.findByUserIdAndPlayerId(userId, playerId)
+                .orElseThrow(() -> new RuntimeException("해당 즐겨찾기한 선수를 찾을수없습니다."));
+
+        favoritePlayerRepository.deleteById(favoritePlayer.getId());
+
     }
 }

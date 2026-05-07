@@ -1,13 +1,11 @@
 package com.example.be12th.domain.match.presentation;
 
+import com.example.be12th.domain.match.presentation.dto.response.MatchDetailResponse;
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
-import com.example.be12th.domain.match.service.CaleanderQueryService;
+import com.example.be12th.domain.match.service.KLeagueMatchDetailQueryService;
 import com.example.be12th.domain.match.service.MatchQueryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -16,17 +14,20 @@ import java.util.List;
 public class MatchController {
 
     private final MatchQueryService matchQueryService;
-    private final CaleanderQueryService caleanderQueryService;
+    private final KLeagueMatchDetailQueryService kLeagueMatchDetailQueryService;
 
-    @GetMapping("/{matchId}")
-    @ResponseStatus(HttpStatus.OK)
-    public MatchResponse query(@PathVariable Long matchId) {
-        return matchQueryService.execute(matchId);
+    @GetMapping("/kleague1")
+    public List<MatchResponse> getKLeague1Matches(@RequestParam int season, @RequestParam String date) {
+        return matchQueryService.getKLeague1Matches(season, date);
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    public List<MatchResponse> queryAll(@RequestParam LocalDate date) {
-        return caleanderQueryService.execute(date);
+    @GetMapping("/kleague2")
+    public List<MatchResponse> getKLeague2Matches(@RequestParam int season, @RequestParam String date) {
+        return matchQueryService.getKLeague2Matches(season, date);
+    }
+
+    @GetMapping("/{matchId}")
+    public MatchDetailResponse getMatchDetail(@PathVariable Long matchId) {
+        return kLeagueMatchDetailQueryService.getMatchDetail(matchId);
     }
 }

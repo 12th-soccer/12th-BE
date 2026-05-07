@@ -1,22 +1,57 @@
 package com.example.be12th.domain.match.service;
 
-import com.example.be12th.domain.match.domain.Match;
-import com.example.be12th.domain.match.domain.repository.MatchRepository;
+import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureApiResponse;
+import com.example.be12th.domain.footballapi.presentation.dto.external.FixtureItem;
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
+import com.example.be12th.domain.footballapi.client.FootballClient;
+import com.example.be12th.domain.footballapi.support.KLeagueConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MatchQueryService {
-    private final MatchRepository matchRepository;
 
-    @Transactional(readOnly = true)
-    public MatchResponse execute(Long matchId){
-        Match match = matchRepository.findById(matchId)
-                .orElseThrow(() -> new RuntimeException("해당 매치를 찾을수 없습니다!"));
+    private final FootballClient apiFootballClient;
 
-        return MatchResponse.from(match);
+    public List<MatchResponse> getKLeague1Matches(int season, String date) {
+        return getMatches(KLeagueConstants.KLEAGUE1_ID, season, date);
+    }
+
+    public List<MatchResponse> getKLeague2Matches(int season, String date) {
+        return getMatches(KLeagueConstants.KLEAGUE2_ID, season, date);
+    }
+
+    private List<MatchResponse> getMatches(Long leagueId, int season, String date) {
+        List<FixtureItem> fixtures = extractFixtures(
+                apiFootballClient.getFixtures(leagueId, season, date)
+        );
+
+        if (fixtures.isEmpty()) {
+            fixtures = extractFixtures(
+                    apiFootballClient.getFixturesByRange(leagueId, season, date, date)
+            );
+        }
+
+        if (fixtures.isEmpty()) {
+            fixtures = apiFootballClient.getFixturesForSeason(leagueId, season).stream()
+                    .filter(item -> item.fixture() != null)
+                    .filter(item -> item.fixture().date() != null)
+                    .filter(item -> item.fixture().date().startsWith(date))
+                    .toList();
+        }
+
+        return fixtures.stream()
+                .map(MatchResponse::from)
+                .toList();
+    }
+
+    private List<FixtureItem> extractFixtures(FixtureApiResponse result) {
+        if (result == null || result.response() == null) {
+            return List.of();
+        }
+
+        return result.response();
     }
 }

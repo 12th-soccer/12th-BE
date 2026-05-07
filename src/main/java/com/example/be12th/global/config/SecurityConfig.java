@@ -54,8 +54,9 @@ public class SecurityConfig {
                         //favorite
                         .requestMatchers(HttpMethod.POST, "/favorite/player/{playerId}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/favorite/player/{playerId}").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/favorite/club/{clubId}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/favorite/club/{clubId}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/favorite/team/{teamId}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/favorite/team/{teamId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/favorite/team").authenticated()
                         .requestMatchers(HttpMethod.GET, "/favorite/schedule/{clubId}").authenticated()
 
                         //event
@@ -63,6 +64,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/event/{matchId}").authenticated()
 
                         //fcm
+                        .requestMatchers(HttpMethod.POST, "/fcm/tokens").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/fcm/test").authenticated()
                         .requestMatchers(HttpMethod.GET, "/notifications/settings").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/notifications/settings").authenticated()
 
