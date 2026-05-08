@@ -64,6 +64,31 @@ public class FootballClient {
                 .body(PlayerApiResponse.class);
     }
 
+    public PlayerApiResponse searchPlayers(String keyword, int season, int page) {
+        return apiFootballRestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/players")
+                        .queryParam("search", keyword)
+                        .queryParam("season", season)
+                        .queryParam("page", page)
+                        .build())
+                .retrieve()
+                .body(PlayerApiResponse.class);
+    }
+
+    public PlayerApiResponse searchPlayersByLeague(Long leagueId, String keyword, int season, int page) {
+        return apiFootballRestClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/players")
+                        .queryParam("league", leagueId)
+                        .queryParam("search", keyword)
+                        .queryParam("season", season)
+                        .queryParam("page", page)
+                        .build())
+                .retrieve()
+                .body(PlayerApiResponse.class);
+    }
+
     public PlayerSquadApiResponse getPlayerSquad(Long teamId) {
         return apiFootballRestClient.get()
                 .uri(uriBuilder -> uriBuilder

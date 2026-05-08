@@ -27,4 +27,14 @@ public class PlayerController {
     public List<PlayerResponse> getKLeague2Players(@RequestParam int season, @RequestParam(defaultValue = "1") int page) {
         return playerQueryService.getKLeague2Players(season, page);
     }
+
+    @GetMapping("/search")
+    public List<PlayerResponse> searchPlayers(
+            @RequestParam String keyword,
+            @RequestParam int season,
+            @RequestParam(defaultValue = "1") int page
+    ) {
+        return playerQueryService.searchPlayers(keyword, season, page);
+    }
+
 }

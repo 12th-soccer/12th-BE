@@ -1,18 +1,15 @@
 package com.example.be12th.domain.player.service;
 
-import com.example.be12th.domain.footballapi.dto.external.PlayerApiResponse;
-import com.example.be12th.domain.footballapi.dto.external.PlayerItem;
-import com.example.be12th.domain.footballapi.dto.external.PlayerSquadApiResponse;
-import com.example.be12th.domain.footballapi.dto.external.PlayerSquadInfo;
-import com.example.be12th.domain.footballapi.dto.external.PlayerSquadItem;
-import com.example.be12th.domain.footballapi.dto.external.PlayerStatisticItem;
+import com.example.be12th.domain.footballapi.dto.external.*;
 import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
 import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
@@ -37,6 +34,22 @@ public class PlayerQueryService {
         return getPlayersByLeague(KLeagueConstants.KLEAGUE2_ID, season, page);
     }
 
+    public List<PlayerResponse> searchPlayers(String keyword, int season, int page) {
+        List<PlayerResponse> kLeague1Players = searchPlayersByLeague(KLeagueConstants.KLEAGUE1_ID, keyword, season, page);
+        List<PlayerResponse> kLeague2Players = searchPlayersByLeague(KLeagueConstants.KLEAGUE2_ID, keyword, season, page);
+
+        LinkedHashMap<Long, PlayerResponse> uniquePlayers = new LinkedHashMap<>();
+
+        for (PlayerResponse player : kLeague1Players) {
+            uniquePlayers.put(player.playerId(), player);
+        }
+
+        for (PlayerResponse player : kLeague2Players) {
+            uniquePlayers.put(player.playerId(), player);
+        }
+
+        return uniquePlayers.values().stream().toList();
+    }
 
     private List<PlayerResponse> getPlayersByLeague(Long leagueId, int season, int page) {
         PlayerApiResponse result = footballClient.getPlayersByLeague(leagueId, season, page);
@@ -48,6 +61,23 @@ public class PlayerQueryService {
         return result.response().stream()
                 .map(item -> toPlayerResponse(item, false))
                 .filter(player -> player != null && player.teamId() != null)
+                .toList();
+    }
+
+    private List<PlayerResponse> searchPlayersByLeague(Long leagueId, String keyword, int season, int page) {
+        PlayerApiResponse result = footballClient.searchPlayersByLeague(leagueId, keyword, season, page);
+
+        if (result == null || result.response() == null) {
+            return List.of();
+        }
+
+        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
+
+        return result.response().stream()
+                .map(item -> toPlayerResponse(item, false))
+                .filter(player -> player != null && player.teamId() != null)
+                .filter(player -> player.name() != null)
+                .filter(player -> player.name().toLowerCase(Locale.ROOT).contains(normalizedKeyword))
                 .toList();
     }
 
@@ -90,12 +120,11 @@ public class PlayerQueryService {
                 .filter(statistic -> statistic.league().id() != null)
                 .filter(statistic ->
                         statistic.league().id().equals(KLeagueConstants.KLEAGUE1_ID) ||
-                        statistic.league().id().equals(KLeagueConstants.KLEAGUE2_ID)
+                                statistic.league().id().equals(KLeagueConstants.KLEAGUE2_ID)
                 )
                 .findFirst()
                 .orElse(null);
     }
-
     private PlayerSquadInfo findSquadInfo(Long teamId, Long playerId) {
         if (teamId == null || playerId == null) {
             return null;
