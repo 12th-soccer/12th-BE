@@ -55,3 +55,6 @@ firebase:
 api:
   football:
     key: ${API_FOOTBALL_KEY}
+
+server:
+  forward-headers-strategy: framework
