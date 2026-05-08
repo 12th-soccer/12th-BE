@@ -46,7 +46,7 @@ public class UserController {
         return userLoginService.execute(userRequest);
     }
 
-    @PostMapping("/logout")
+    @DeleteMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest httpServletRequest) {
         userLogoutService.logout(httpServletRequest);
