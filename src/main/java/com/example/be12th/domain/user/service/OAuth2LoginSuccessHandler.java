@@ -43,7 +43,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             session.invalidate();
         }
 
-        String redirectUrl = "twelfth://oauth-callback"
+        String redirectUrl = "http://12th.cloud/health"
                 + "?accessToken=" + URLEncoder.encode(accessToken, StandardCharsets.UTF_8)
                 + "&refreshToken=" + URLEncoder.encode(refreshToken, StandardCharsets.UTF_8)
                 + "&email=" + URLEncoder.encode(email, StandardCharsets.UTF_8);
