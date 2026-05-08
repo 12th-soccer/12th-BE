@@ -14,7 +14,7 @@ import java.util.List;
 public class PlayerSearchService {
     private final FootballClient footballClient;
 
-    public List<PlayerSearchResponse> searchPlayers(String keyword, int season, int page) {
+    public List<PlayerSearchResponse> execute(String keyword, int season, int page) {
         List<PlayerSearchResponse> kLeague1Players = searchPlayersByLeague(KLeagueConstants.KLEAGUE1_ID, keyword, season, page);
         List<PlayerSearchResponse> kLeague2Players = searchPlayersByLeague(KLeagueConstants.KLEAGUE2_ID, keyword, season, page);
 
