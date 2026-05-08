@@ -5,6 +5,7 @@ import com.example.be12th.domain.user.service.OAuth2LoginSuccessHandler;
 import com.example.be12th.global.jwt.JwtTokenFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityConfig {
 
     private final JwtTokenFilter jwtTokenFilter;
@@ -84,6 +86,10 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(customOidcUserService)
                         )
+                        .failureHandler((request, response, exception) -> {
+                            log.error("OAuth2 login failed", exception);
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
+                        })
                         .successHandler(oAuth2LoginSuccessHandler)
                 );
 
