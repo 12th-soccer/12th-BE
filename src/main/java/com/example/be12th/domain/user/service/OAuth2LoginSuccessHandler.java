@@ -1,5 +1,6 @@
 package com.example.be12th.domain.user.service;
 
+import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.global.jwt.JwtTokenProvider;
@@ -14,8 +15,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 @Component
 @RequiredArgsConstructor
@@ -43,11 +42,11 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             session.invalidate();
         }
 
-        String redirectUrl = "http://12th.cloud/health"
-                + "?accessToken=" + URLEncoder.encode(accessToken, StandardCharsets.UTF_8)
-                + "&refreshToken=" + URLEncoder.encode(refreshToken, StandardCharsets.UTF_8)
-                + "&email=" + URLEncoder.encode(email, StandardCharsets.UTF_8);
-
-        response.sendRedirect(redirectUrl);
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json;charset=UTF-8");
+        LoginResponse loginResponse = new LoginResponse(accessToken, refreshToken);
+        String responseBody = "{\"AccessToken\":\"" + loginResponse.getAccessToken()
+                + "\",\"RefreshToken\":\"" + loginResponse.getRefreshToken() + "\"}";
+        response.getWriter().write(responseBody);
     }
 }
