@@ -12,6 +12,7 @@ public class NotificationSettingResponse {
     private Boolean thirtyMinutesBeforeEnabled;
     private Boolean fifteenMinutesBeforeEnabled;
     private Boolean matchStartEnabled;
+    private Boolean favoriteTeamMatchEnabled;
 
     public static NotificationSettingResponse from(NotificationSetting setting) {
         return new NotificationSettingResponse(
@@ -19,7 +20,8 @@ public class NotificationSettingResponse {
                 setting.getOneHourBeforeEnabled(),
                 setting.getThirtyMinutesBeforeEnabled(),
                 setting.getFifteenMinutesBeforeEnabled(),
-                setting.getMatchStartEnabled()
+                setting.getMatchStartEnabled(),
+                setting.getFavoriteTeamMatchEnabled()
         );
     }
 }
