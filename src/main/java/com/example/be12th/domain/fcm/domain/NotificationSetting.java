@@ -34,17 +34,22 @@ public class NotificationSetting {
     @Builder.Default
     private Boolean notificationEnabled = true;
 
+    @Builder.Default
+    private Boolean favoriteTeamMatchEnabled = true;
+
     public void update(
             Boolean notificationEnabled,
             Boolean oneHourBeforeEnabled,
             Boolean thirtyMinutesBeforeEnabled,
             Boolean fifteenMinutesBeforeEnabled,
-            Boolean matchStartEnabled
+            Boolean matchStartEnabled,
+            Boolean favoriteTeamMatchEnabled
     ) {
         if (notificationEnabled != null) this.notificationEnabled = notificationEnabled;
         if (oneHourBeforeEnabled != null) this.oneHourBeforeEnabled = oneHourBeforeEnabled;
         if (thirtyMinutesBeforeEnabled != null) this.thirtyMinutesBeforeEnabled = thirtyMinutesBeforeEnabled;
         if (fifteenMinutesBeforeEnabled != null) this.fifteenMinutesBeforeEnabled = fifteenMinutesBeforeEnabled;
         if (matchStartEnabled != null) this.matchStartEnabled = matchStartEnabled;
+        if (favoriteTeamMatchEnabled != null) this.favoriteTeamMatchEnabled = favoriteTeamMatchEnabled;
     }
 }

@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "firebase.enabled", havingValue = "true")
-public class NotificationSettingService {
+public class NotificationUpdateService {
 
     private final NotificationSettingRepository notificationSettingRepository;
     private final UserRepository userRepository;
     private final UserFacade userFacade;
 
     @Transactional
-    public NotificationSettingResponse execute() {
+    public NotificationSettingResponse execute(NotificationSettingRequest request) {
         User user = userRepository.findById(userFacade.currentUserId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
@@ -38,6 +38,15 @@ public class NotificationSettingService {
                                 .favoriteTeamMatchEnabled(true)
                                 .build()
                 ));
+
+        setting.update(
+                request.getNotificationEnabled(),
+                request.getOneHourBeforeEnabled(),
+                request.getThirtyMinutesBeforeEnabled(),
+                request.getFifteenMinutesBeforeEnabled(),
+                request.getMatchStartEnabled(),
+                request.getFavoriteTeamMatchEnabled()
+        );
 
         return NotificationSettingResponse.from(setting);
     }
