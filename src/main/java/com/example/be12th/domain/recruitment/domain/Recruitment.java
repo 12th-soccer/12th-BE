@@ -4,6 +4,7 @@ import com.example.be12th.domain.recruitment.domain.category.AgeGroup;
 import com.example.be12th.domain.recruitment.domain.category.GenderGroup;
 import com.example.be12th.domain.recruitment.domain.category.K1Group;
 import com.example.be12th.domain.recruitment.domain.category.K2Group;
+import com.example.be12th.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,4 +37,8 @@ public class Recruitment {
 
     @Enumerated(EnumType.STRING)
     private K2Group k2Group;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

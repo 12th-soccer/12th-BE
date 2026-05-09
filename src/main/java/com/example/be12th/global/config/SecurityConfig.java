@@ -72,6 +72,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/notifications/settings").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/notifications/settings").authenticated()
 
+                        //recruitment
+                        .requestMatchers(HttpMethod.POST, "/recruitment").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/recruitment").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/recruitment/{recruitmentId}").permitAll()
+
                         .anyRequest().permitAll()
                 )
 
