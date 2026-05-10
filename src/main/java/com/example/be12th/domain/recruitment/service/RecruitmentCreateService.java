@@ -34,6 +34,7 @@ public class RecruitmentCreateService {
         Recruitment recruitment = Recruitment.builder()
                 .title(recruitmentRequest.title())
                 .content(recruitmentRequest.content())
+                .headCount(recruitmentRequest.headCount())
                 .ageGroup(recruitmentRequest.ageGroup())
                 .genderGroup(recruitmentRequest.genderGroup())
                 .k1Group(recruitmentRequest.k1Group())

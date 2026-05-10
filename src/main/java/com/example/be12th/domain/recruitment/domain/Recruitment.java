@@ -26,6 +26,9 @@ public class Recruitment {
     @Column(name = "content",nullable = false)
     private String content;
 
+    @Column(name = "head_count", nullable = false)
+    private Integer headCount;
+
     @Enumerated(EnumType.STRING)
     private AgeGroup ageGroup;
 

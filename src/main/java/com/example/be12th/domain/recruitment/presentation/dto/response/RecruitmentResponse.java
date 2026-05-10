@@ -9,6 +9,7 @@ import com.example.be12th.domain.recruitment.domain.category.K2Group;
 public record RecruitmentResponse(
         String title,
         String content,
+        Integer headCount,
         AgeGroup ageGroup,
         GenderGroup genderGroup,
         K1Group k1Group,
@@ -18,6 +19,7 @@ public record RecruitmentResponse(
         return new RecruitmentResponse(
                 recruitment.getTitle(),
                 recruitment.getContent(),
+                recruitment.getHeadCount(),
                 recruitment.getAgeGroup(),
                 recruitment.getGenderGroup(),
                 recruitment.getK1Group(),
