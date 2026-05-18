@@ -52,7 +52,7 @@ public class KLeagueMatchDetailQueryService {
         List<LineupResponse> lineups = extractLineups(matchId);
 
         return new MatchDetailResponse(
-                MatchListResponse.from(fixtureItem),
+                match,
                 events,
                 lineups
         );
