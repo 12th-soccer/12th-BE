@@ -7,10 +7,8 @@ import com.example.be12th.domain.footballapi.dto.external.FixtureItem;
 import com.example.be12th.domain.footballapi.dto.external.LineupApiResponse;
 import com.example.be12th.domain.footballapi.dto.external.LineupItem;
 import com.example.be12th.domain.footballapi.client.FootballClient;
-import com.example.be12th.domain.match.presentation.dto.response.LineupResponse;
-import com.example.be12th.domain.match.presentation.dto.response.MatchDetailResponse;
-import com.example.be12th.domain.match.presentation.dto.response.MatchEventResponse;
-import com.example.be12th.domain.match.presentation.dto.response.MatchListResponse;
+import com.example.be12th.domain.match.presentation.dto.response.*;
+import com.example.be12th.domain.spoiler.service.SpoilerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -20,6 +18,7 @@ import java.util.List;
 public class KLeagueMatchDetailQueryService {
 
     private final FootballClient footballClient;
+    private final SpoilerService spoilerService;
 
     public MatchDetailResponse getMatchDetail(Long matchId) {
         FixtureApiResponse fixtureResult = footballClient.getFixtureDetail(matchId);
@@ -28,7 +27,26 @@ public class KLeagueMatchDetailQueryService {
             return null;
         }
 
+
         FixtureItem fixtureItem = fixtureResult.response().get(0);
+
+        MatchListResponse match = MatchListResponse.from(fixtureItem);
+
+        if(spoilerService.isTodayMatch(match.matchDate()) && spoilerService.isSpoilerEnabled()){
+                match = new MatchListResponse(
+                        match.matchId(),
+                        match.leagueType(),
+                        match.matchDate(),
+                        match.homeTeamName(),
+                        match.homeTeamId(),
+                        match.homeTeamImageUrl(),
+                        match.awayTeamName(),
+                        match.awayTeamId(),
+                        match.awayTeamImageUrl(),
+                        null,
+                        null
+                );
+            }
 
         List<MatchEventResponse> events = extractEvents(matchId);
         List<LineupResponse> lineups = extractLineups(matchId);
