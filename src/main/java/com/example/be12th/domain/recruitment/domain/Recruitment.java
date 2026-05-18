@@ -36,7 +36,7 @@ public class Recruitment {
     private LocalDateTime createdAt;
 
     @Column(name = "end_date", nullable = false)
-    private LocalDateTime endDate;
+    private LocalDateTime expiredAt;
 
     @Column(name = "head_count", nullable = false)
     private Integer headCount;

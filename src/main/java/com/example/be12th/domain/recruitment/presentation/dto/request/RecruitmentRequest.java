@@ -11,6 +11,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDateTime;
+
 public record RecruitmentRequest(
         @NotBlank
         @Size(max = 50)
@@ -24,6 +26,9 @@ public record RecruitmentRequest(
         @Min(value = 4, message = "모집 인원은 4명 이상이어야 합니다.")
         @Max(value = 10, message = "모집 인원은 10명 이하여야 합니다.")
         Integer headCount,
+
+        @NotNull
+        LocalDateTime expiredAt,
 
         @NotNull
         AgeGroup ageGroup,

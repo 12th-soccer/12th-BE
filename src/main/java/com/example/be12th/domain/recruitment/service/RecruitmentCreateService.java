@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalDateTime;
-
 @Service
 @Validated
 @RequiredArgsConstructor
@@ -37,11 +35,11 @@ public class RecruitmentCreateService {
                 .title(recruitmentRequest.title())
                 .content(recruitmentRequest.content())
                 .headCount(recruitmentRequest.headCount())
+                .expiredAt(recruitmentRequest.expiredAt())
                 .ageGroup(recruitmentRequest.ageGroup())
                 .genderGroup(recruitmentRequest.genderGroup())
                 .k1Group(recruitmentRequest.k1Group())
                 .k2Group(recruitmentRequest.k2Group())
-                .createdAt(LocalDateTime.now())
                 .user(user)
                 .build();
 
