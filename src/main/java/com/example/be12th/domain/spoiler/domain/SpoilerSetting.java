@@ -21,4 +21,10 @@ public class SpoilerSetting {
 
     @Builder.Default
     private Boolean spoilerEnabled = true;
+
+    public void update(
+            Boolean spoilerEnabled
+    ){
+        if(spoilerEnabled != null ) this.spoilerEnabled = spoilerEnabled;
+    }
 }
