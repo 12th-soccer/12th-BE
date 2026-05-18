@@ -6,9 +6,12 @@ import com.example.be12th.domain.recruitment.domain.category.GenderGroup;
 import com.example.be12th.domain.recruitment.domain.category.K1Group;
 import com.example.be12th.domain.recruitment.domain.category.K2Group;
 
+import java.time.LocalDateTime;
+
 public record RecruitmentResponse(
         String title,
         String content,
+        LocalDateTime createdDate,
         Integer headCount,
         AgeGroup ageGroup,
         GenderGroup genderGroup,
@@ -19,6 +22,7 @@ public record RecruitmentResponse(
         return new RecruitmentResponse(
                 recruitment.getTitle(),
                 recruitment.getContent(),
+                recruitment.getCreatedAt(),
                 recruitment.getHeadCount(),
                 recruitment.getAgeGroup(),
                 recruitment.getGenderGroup(),
