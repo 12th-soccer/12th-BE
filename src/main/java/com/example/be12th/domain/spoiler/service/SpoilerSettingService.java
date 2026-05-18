@@ -22,7 +22,7 @@ public class SpoilerSettingService {
         User user = userRepository.findById(userFacade.currentUserId())
                 .orElseThrow(() -> new RuntimeException("유저를 찾을수 없습니다."));
 
-        SpoilerSetting spoilerSetting = spoilerRepository.findById(user.getId())
+        SpoilerSetting spoilerSetting = spoilerRepository.findByUserId(user.getId())
                 .orElseGet(() -> spoilerRepository.save(
                         SpoilerSetting.builder()
                                 .user(user)
