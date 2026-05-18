@@ -7,8 +7,10 @@ public record MatchListResponse(
         String leagueType,
         String matchDate,
         String homeTeamName,
+        Long homeTeamId,
         String homeTeamImageUrl,
         String awayTeamName,
+        Long awayTeamId,
         String awayTeamImageUrl,
         Integer homeTeamScore,
         Integer awayTeamScore
@@ -19,8 +21,10 @@ public record MatchListResponse(
                 convertLeagueType(item.league().id()),
                 item.fixture().date(),
                 item.teams().home().name(),
+                item.teams().home().id(),
                 item.teams().home().logo(),
                 item.teams().away().name(),
+                item.teams().away().id(),
                 item.teams().away().logo(),
                 item.goals().home(),
                 item.goals().away()
