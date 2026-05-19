@@ -10,7 +10,12 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Table(name = "tbl_join")
+@Table(
+        name = "tbl_join",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_join_user_recruitment", columnNames = {"user_id", "recruitment_id"})
+        }
+)
 public class Join {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

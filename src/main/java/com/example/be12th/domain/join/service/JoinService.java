@@ -9,6 +9,9 @@ import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +21,7 @@ public class JoinService {
     private final RecruitmentRepository recruitmentRepository;
     private final UserFacade userFacade;
 
+    @Transactional
     public void execute(Long recruitmentId){
         User user = userRepository.findById(userFacade.currentUserId())
                 .orElseThrow(() -> new RuntimeException ("해당 유저를 찾을수 없습니다"));
@@ -25,15 +29,24 @@ public class JoinService {
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId)
                 .orElseThrow(()-> new RuntimeException("해당 모집 게시물을 찾을수없습니다."));
 
-    final boolean ExistsRecruitmentAndUser = joinRepository.existsByUserAndRecruitment(user, recruitment);
+        if (recruitment.getExpiredAt().isBefore(LocalDateTime.now(ZoneId.of("Asia/Seoul")))) {
+            throw new RuntimeException("마감된 모집글입니다.");
+        }
 
-    if(ExistsRecruitmentAndUser){
-        throw new RuntimeException("이미 가입 신청한 그룹입니다.");
-    }
-    Join join = Join.builder()
-            .user(user)
-            .recruitment(recruitment)
-            .build();
-    joinRepository.save(join);
+        boolean existsRecruitmentAndUser = joinRepository.existsByUserAndRecruitment(user, recruitment);
+        if (existsRecruitmentAndUser) {
+            throw new RuntimeException("이미 가입 신청한 그룹입니다.");
+        }
+
+        long joinCount = joinRepository.countByRecruitment(recruitment);
+        if (joinCount >= recruitment.getHeadCount()) {
+            throw new RuntimeException("모집 인원이 가득 찼습니다.");
+        }
+
+        Join join = Join.builder()
+                .user(user)
+                .recruitment(recruitment)
+                .build();
+        joinRepository.save(join);
     }
 }
