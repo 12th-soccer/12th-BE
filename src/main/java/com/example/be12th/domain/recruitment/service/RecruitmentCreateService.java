@@ -35,6 +35,7 @@ public class RecruitmentCreateService {
                 .title(recruitmentRequest.title())
                 .content(recruitmentRequest.content())
                 .headCount(recruitmentRequest.headCount())
+                .expiredAt(recruitmentRequest.expiredAt())
                 .ageGroup(recruitmentRequest.ageGroup())
                 .genderGroup(recruitmentRequest.genderGroup())
                 .k1Group(recruitmentRequest.k1Group())
