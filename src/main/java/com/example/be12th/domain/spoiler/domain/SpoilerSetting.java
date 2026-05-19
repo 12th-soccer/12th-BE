@@ -9,10 +9,12 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@Table(name = "tbl_spoiler")
 public class SpoilerSetting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "spoiler_id",nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
