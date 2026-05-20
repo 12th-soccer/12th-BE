@@ -9,6 +9,7 @@ import com.example.be12th.domain.recruitment.domain.category.K2Group;
 import java.time.LocalDateTime;
 
 public record RecruitmentResponse(
+        Long id,
         String title,
         String content,
         LocalDateTime createdDate,
@@ -21,6 +22,7 @@ public record RecruitmentResponse(
 ) {
     public static RecruitmentResponse from(Recruitment recruitment) {
         return new RecruitmentResponse(
+                recruitment.getRecruitmentId(),
                 recruitment.getTitle(),
                 recruitment.getContent(),
                 recruitment.getCreatedAt(),
