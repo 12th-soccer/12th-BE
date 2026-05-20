@@ -29,7 +29,8 @@ public class JoinService {
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId)
                 .orElseThrow(()-> new RuntimeException("해당 모집 게시물을 찾을수없습니다."));
 
-        if (recruitment.getExpiredAt().isBefore(LocalDateTime.now(ZoneId.of("Asia/Seoul")))) {
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        if (!now.isBefore(recruitment.getExpiredAt())) {
             throw new RuntimeException("마감된 모집글입니다.");
         }
 
