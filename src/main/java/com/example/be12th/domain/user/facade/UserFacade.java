@@ -15,7 +15,7 @@ public class UserFacade{
         String accountId = SecurityContextHolder.getContext().getAuthentication().getName();
 
         return userRepository.findByEmail(accountId)
+                .filter(user -> !user.isDeleted())
                 .orElseThrow(() -> new UsernameNotFoundException("현재 유저를 찾을수없습니다.")).getId();
     }
 }
-

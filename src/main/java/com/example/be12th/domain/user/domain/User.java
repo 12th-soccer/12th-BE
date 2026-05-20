@@ -3,6 +3,8 @@ package com.example.be12th.domain.user.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,5 +25,15 @@ public class User {
 
     @Column(name = "password",nullable = false)
     private String password;
-    
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean deleted = false;
+
+    private LocalDateTime deletedAt;
+
+    public void withdraw() {
+        this.deleted = true;
+        this.deletedAt = LocalDateTime.now();
+    }
 }

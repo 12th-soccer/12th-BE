@@ -35,6 +35,10 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
+        if (user.isDeleted()) {
+            throw new RuntimeException("탈퇴한 회원입니다.");
+        }
+
         String accessToken = jwtTokenProvider.generateAccessToken(user.getEmail());
         String refreshToken = jwtTokenProvider.generateRefreshToken(user.getEmail());
 

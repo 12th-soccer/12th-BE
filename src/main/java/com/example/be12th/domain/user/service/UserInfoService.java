@@ -22,6 +22,10 @@ public class UserInfoService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("현재 로그인한 사용자와 일치하지않음."));
 
+        if (user.isDeleted()) {
+            throw new RuntimeException("탈퇴한 회원입니다.");
+        }
+
         return UserResponse.from(user);
     }
 }

@@ -36,7 +36,7 @@ public class CustomOidcUserService extends OidcUserService {
         if (email == null || email.isBlank()) {
             throw new IllegalStateException("OIDC 제공자에서 이메일을 제공하지 않았습니다.");
         }
-        userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseGet(() -> userRepository.saveAndFlush(
                         User.builder()
                                 .email(email)
@@ -44,6 +44,10 @@ public class CustomOidcUserService extends OidcUserService {
                                 .password(passwordEncoder.encode(UUID.randomUUID().toString()))
                                 .build()
                 ));
+
+        if (user.isDeleted()) {
+            throw new RuntimeException("탈퇴한 회원입니다.");
+        }
 
         return new DefaultOidcUser(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),

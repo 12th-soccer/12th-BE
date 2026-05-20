@@ -21,6 +21,7 @@ public class UserController {
     private final UserLoginService userLoginService;
     private final UserLogoutService userLogoutService;
     private final UserInfoService userInfoService;
+    private final UserDeleteService userDeleteService;
 
     @PostMapping("/email")
     @ResponseStatus(HttpStatus.OK)
@@ -50,5 +51,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest httpServletRequest) {
         userLogoutService.logout(httpServletRequest);
+    }
+
+    @DeleteMapping("/me")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteMe() {
+        userDeleteService.execute();
     }
 }

@@ -16,6 +16,7 @@ public class AuthDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String accountId) throws UsernameNotFoundException {
         return userRepository.findByEmail(accountId)
+                .filter(user -> !user.isDeleted())
                 .map(AuthDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException(accountId));
     }
