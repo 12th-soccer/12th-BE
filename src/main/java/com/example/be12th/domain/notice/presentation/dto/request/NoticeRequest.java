@@ -1,10 +1,11 @@
 package com.example.be12th.domain.notice.presentation.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-@Getter
-@AllArgsConstructor
-public class NoticeRequest {
-    private String description;
+public record NoticeRequest(
+        @NotBlank
+        @Size(max = 255)
+        String description
+) {
 }
