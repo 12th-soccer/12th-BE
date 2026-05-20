@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Builder
+@Table(name = "tbl_notice")
 public class Notice {
 
     @Id
@@ -21,10 +22,10 @@ public class Notice {
     @JoinColumn(name = "recruitment_id",nullable = false)
     private Recruitment recruitment;
 
-    @Column(nullable = false,name = "notice_description")
-    private String description;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
+
+    @Column(nullable = false,name = "notice_description")
+    private String description;
 }
