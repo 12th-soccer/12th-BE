@@ -26,7 +26,7 @@ public class JoinService {
         User user = userRepository.findById(userFacade.currentUserId())
                 .orElseThrow(() -> new RuntimeException ("해당 유저를 찾을수 없습니다"));
 
-        Recruitment recruitment = recruitmentRepository.findById(recruitmentId)
+        Recruitment recruitment = recruitmentRepository.findByIdForUpdate(recruitmentId)
                 .orElseThrow(()-> new RuntimeException("해당 모집 게시물을 찾을수없습니다."));
 
         LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
