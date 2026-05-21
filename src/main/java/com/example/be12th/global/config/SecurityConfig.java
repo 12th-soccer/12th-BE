@@ -30,29 +30,38 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        //health
+                        .requestMatchers(HttpMethod.GET, "/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/health").permitAll()
+
                         //user
                         .requestMatchers(HttpMethod.POST, "/user/email").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/verify/signup").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                         .requestMatchers("/", "/login/**", "/oauth2/**", "/user/login/success").permitAll()
                         .requestMatchers(HttpMethod.GET, "/user/info").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/user/logout").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/user/me").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/user/name").authenticated()
 
                         //ranking
                         .requestMatchers(HttpMethod.GET, "/ranking").authenticated()
 
-                        //club
-                        .requestMatchers(HttpMethod.GET, "/club/{clubId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/club/favorite").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/club/search").permitAll()
+                        //team
+                        .requestMatchers(HttpMethod.GET, "/teams/kleague1").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/teams/kleague2").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/teams/{teamId}").authenticated()
 
                         //match
+                        .requestMatchers(HttpMethod.GET, "/match/kleague1").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/match/kleague2").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/{matchId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/matches").authenticated()
 
                         //player
-                        .requestMatchers(HttpMethod.GET, "/player/{playerId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/player/interest").permitAll()
                         .requestMatchers(HttpMethod.GET, "/player/search").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/player/kleague1").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/player/kleague2").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/player/{playerId}").authenticated()
 
                         //favorite
                         .requestMatchers(HttpMethod.POST, "/favorite/player/{playerId}").authenticated()
@@ -60,11 +69,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/favorite/team/{teamId}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/favorite/team/{teamId}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/favorite/team").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/favorite/schedule/{clubId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/favorite/player").authenticated()
 
-                        //event
-                        .requestMatchers(HttpMethod.GET, "/goal/{playerId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/event/{matchId}").authenticated()
+                        //goal
+                        .requestMatchers(HttpMethod.GET, "/goals/{playerId}").authenticated()
+
+                        //search
+                        .requestMatchers(HttpMethod.GET, "/search/player").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/search/team").permitAll()
 
                         //fcm
                         .requestMatchers(HttpMethod.POST, "/fcm/tokens").authenticated()
@@ -72,12 +84,27 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/notifications/settings").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/notifications/settings").authenticated()
 
+                        //spoiler
+                        .requestMatchers(HttpMethod.GET, "/spoiler").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/spoiler").authenticated()
+
                         //recruitment
                         .requestMatchers(HttpMethod.POST, "/recruitment").authenticated()
                         .requestMatchers(HttpMethod.GET, "/recruitment").permitAll()
                         .requestMatchers(HttpMethod.GET, "/recruitment/{recruitmentId}").permitAll()
 
-                        .anyRequest().permitAll()
+                        //join
+                        .requestMatchers(HttpMethod.POST, "/join/{id}").authenticated()
+
+                        //notice
+                        .requestMatchers(HttpMethod.POST, "/notice/{recruitmentId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/notice/{noticeId}").authenticated()
+
+                        //comment
+                        .requestMatchers(HttpMethod.POST, "/comment/{noticeId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/comment/{noticeId}").authenticated()
+
+                        .anyRequest().denyAll()
                 )
 
                 .exceptionHandling(ex -> ex
