@@ -15,12 +15,12 @@ public class SpoilerController {
     private final SpoilerUpdateService spoilerUpdateService;
 
     @GetMapping
-    public SpoilerResponse execute(){
+    public SpoilerResponse getSetting(){
         return spoilerSettingService.execute();
     }
 
     @PatchMapping
-    public SpoilerResponse execute(@RequestBody SpoilerRequest spoilerRequest){
+    public SpoilerResponse updateSetting(@RequestBody SpoilerRequest spoilerRequest){
         return spoilerUpdateService.execute(spoilerRequest);
     }
 }
