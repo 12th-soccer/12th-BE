@@ -124,7 +124,6 @@ public class MatchNotificationService {
                                 .thirtyMinutesBeforeEnabled(true)
                                 .fifteenMinutesBeforeEnabled(true)
                                 .matchStartEnabled(true)
-                                .favoriteTeamMatchEnabled(true)
                                 .build()
                 ));
 
@@ -157,7 +156,7 @@ public class MatchNotificationService {
     }
 
     private boolean isEnabled(NotificationSetting setting, NotificationType notificationType) {
-        if (!Boolean.TRUE.equals(setting.getNotificationEnabled()) || !Boolean.TRUE.equals(setting.getFavoriteTeamMatchEnabled())) {
+        if (!Boolean.TRUE.equals(setting.getNotificationEnabled())) {
             return false;
         }
 
