@@ -32,7 +32,7 @@ public class Recruitment {
     private String content;
 
     @CreatedDate
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "end_date", nullable = false)

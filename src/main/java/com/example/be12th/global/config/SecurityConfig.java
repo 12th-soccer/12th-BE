@@ -30,6 +30,8 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                         //health
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/health").permitAll()
@@ -50,29 +52,29 @@ public class SecurityConfig {
                         //team
                         .requestMatchers(HttpMethod.GET, "/teams/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/teams/kleague2").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/teams/{teamId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/teams/*").authenticated()
 
                         //match
                         .requestMatchers(HttpMethod.GET, "/match/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/kleague2").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/match/{matchId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/match/*").authenticated()
 
                         //player
                         .requestMatchers(HttpMethod.GET, "/player/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/player/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/player/kleague2").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/player/{playerId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/player/*").authenticated()
 
                         //favorite
-                        .requestMatchers(HttpMethod.POST, "/favorite/player/{playerId}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/favorite/player/{playerId}").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/favorite/team/{teamId}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/favorite/team/{teamId}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/favorite/player/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/favorite/player/*").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/favorite/team/*").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/favorite/team/*").authenticated()
                         .requestMatchers(HttpMethod.GET, "/favorite/team").authenticated()
                         .requestMatchers(HttpMethod.GET, "/favorite/player").authenticated()
 
                         //goal
-                        .requestMatchers(HttpMethod.GET, "/goals/{playerId}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/goals/*").authenticated()
 
                         //search
                         .requestMatchers(HttpMethod.GET, "/search/player").permitAll()
@@ -91,18 +93,18 @@ public class SecurityConfig {
                         //recruitment
                         .requestMatchers(HttpMethod.POST, "/recruitment").authenticated()
                         .requestMatchers(HttpMethod.GET, "/recruitment").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/recruitment/{recruitmentId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/recruitment/*").permitAll()
 
                         //join
-                        .requestMatchers(HttpMethod.POST, "/join/{id}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/join/*").authenticated()
 
                         //notice
-                        .requestMatchers(HttpMethod.POST, "/notice/{recruitmentId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/notice/{noticeId}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/notice/*").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/notice/*").authenticated()
 
                         //comment
-                        .requestMatchers(HttpMethod.POST, "/comment/{noticeId}").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/comment/{noticeId}").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/comment/*").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/comment/*").authenticated()
 
                         .anyRequest().denyAll()
                 )
