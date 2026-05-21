@@ -35,7 +35,6 @@ public class NotificationUpdateService {
                                 .thirtyMinutesBeforeEnabled(true)
                                 .fifteenMinutesBeforeEnabled(true)
                                 .matchStartEnabled(true)
-                                .favoriteTeamMatchEnabled(true)
                                 .build()
                 ));
 
@@ -44,8 +43,7 @@ public class NotificationUpdateService {
                 request.getOneHourBeforeEnabled(),
                 request.getThirtyMinutesBeforeEnabled(),
                 request.getFifteenMinutesBeforeEnabled(),
-                request.getMatchStartEnabled(),
-                request.getFavoriteTeamMatchEnabled()
+                request.getMatchStartEnabled()
         );
 
         return NotificationSettingResponse.from(setting);

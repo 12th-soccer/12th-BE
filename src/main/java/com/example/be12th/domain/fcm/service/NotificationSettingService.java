@@ -35,7 +35,6 @@ public class NotificationSettingService {
                                 .thirtyMinutesBeforeEnabled(true)
                                 .fifteenMinutesBeforeEnabled(true)
                                 .matchStartEnabled(true)
-                                .favoriteTeamMatchEnabled(true)
                                 .build()
                 ));
 

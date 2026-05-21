@@ -9,5 +9,4 @@ public class NotificationSettingRequest {
     private Boolean thirtyMinutesBeforeEnabled;
     private Boolean fifteenMinutesBeforeEnabled;
     private Boolean matchStartEnabled;
-    private Boolean favoriteTeamMatchEnabled;
 }
