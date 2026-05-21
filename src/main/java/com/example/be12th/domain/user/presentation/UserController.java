@@ -2,6 +2,7 @@ package com.example.be12th.domain.user.presentation;
 
 import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
+import com.example.be12th.domain.user.presentation.dto.request.UserNameRequest;
 import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
 import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
 import com.example.be12th.domain.user.presentation.dto.response.UserResponse;
@@ -22,6 +23,7 @@ public class UserController {
     private final UserLogoutService userLogoutService;
     private final UserInfoService userInfoService;
     private final UserDeleteService userDeleteService;
+    private final UserNameChangeService userNameChangeService;
 
     @PostMapping("/email")
     @ResponseStatus(HttpStatus.OK)
@@ -57,5 +59,11 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void deleteMe() {
         userDeleteService.execute();
+    }
+
+    @PatchMapping("/name")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateName(@Valid @RequestBody UserNameRequest request) {
+        userNameChangeService.execute(request);
     }
 }

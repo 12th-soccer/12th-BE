@@ -36,4 +36,7 @@ public class User {
         this.deleted = true;
         this.deletedAt = LocalDateTime.now();
     }
+    public void updateName(String name){
+        this.name = name;
+    }
 }
