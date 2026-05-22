@@ -15,12 +15,13 @@ public record RecruitmentResponse(
         LocalDateTime createdDate,
         LocalDateTime expiredAt,
         Integer headCount,
+        Integer currentParticipants,
         AgeGroup ageGroup,
         GenderGroup genderGroup,
         K1Group k1Group,
         K2Group k2Group
 ) {
-    public static RecruitmentResponse from(Recruitment recruitment) {
+    public static RecruitmentResponse from(Recruitment recruitment, Integer currentParticipants) {
         return new RecruitmentResponse(
                 recruitment.getRecruitmentId(),
                 recruitment.getTitle(),
@@ -28,6 +29,7 @@ public record RecruitmentResponse(
                 recruitment.getCreatedAt(),
                 recruitment.getExpiredAt(),
                 recruitment.getHeadCount(),
+                currentParticipants,
                 recruitment.getAgeGroup(),
                 recruitment.getGenderGroup(),
                 recruitment.getK1Group(),
