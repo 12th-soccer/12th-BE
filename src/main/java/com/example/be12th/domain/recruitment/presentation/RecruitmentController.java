@@ -1,6 +1,7 @@
 package com.example.be12th.domain.recruitment.presentation;
 
 import com.example.be12th.domain.recruitment.presentation.dto.request.RecruitmentRequest;
+import com.example.be12th.domain.recruitment.presentation.dto.response.RecruitmentQueryResponse;
 import com.example.be12th.domain.recruitment.presentation.dto.response.RecruitmentResponse;
 import com.example.be12th.domain.recruitment.service.RecruitmentCreateService;
 import com.example.be12th.domain.recruitment.service.RecruitmentQueryAllService;
@@ -30,7 +31,7 @@ public class RecruitmentController {
     }
 
     @GetMapping("/{recruitmentId}")
-    public RecruitmentResponse getRecruitment(@PathVariable Long recruitmentId) {
+    public RecruitmentQueryResponse getRecruitment(@PathVariable Long recruitmentId) {
         return recruitmentQueryService.execute(recruitmentId);
     }
 
