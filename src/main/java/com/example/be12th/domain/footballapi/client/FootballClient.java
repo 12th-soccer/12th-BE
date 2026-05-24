@@ -26,6 +26,7 @@ public class FootballClient {
                         .queryParam("league", leagueId)
                         .queryParam("season", season)
                         .queryParam("date", date)
+                        .queryParam("timezone", "Asia/Seoul")
                         .build())
                 .retrieve()
                 .body(FixtureApiResponse.class);
@@ -36,6 +37,7 @@ public class FootballClient {
                 .uri(uriBuilder -> uriBuilder
                         .path("/fixtures")
                         .queryParam("id", matchId)
+                        .queryParam("timezone", "Asia/Seoul")
                         .build())
                 .retrieve()
                 .body(FixtureApiResponse.class);
@@ -148,6 +150,7 @@ public class FootballClient {
                         .queryParam("season", season)
                         .queryParam("from", from)
                         .queryParam("to", to)
+                        .queryParam("timezone", "Asia/Seoul")
                         .build())
                 .retrieve()
                 .body(FixtureApiResponse.class);
@@ -159,6 +162,7 @@ public class FootballClient {
                         .path("/fixtures")
                         .queryParam("league", leagueId)
                         .queryParam("season", season)
+                        .queryParam("timezone", "Asia/Seoul")
                         .build())
                 .retrieve()
                 .body(FixtureApiResponse.class);
