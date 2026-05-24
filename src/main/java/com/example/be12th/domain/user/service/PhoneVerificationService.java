@@ -6,6 +6,7 @@ import com.example.be12th.domain.user.facade.UserFacade;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +41,11 @@ public class PhoneVerificationService {
             throw new IllegalArgumentException("이미 사용 중인 전화번호입니다.");
         }
 
-        user.updatePhoneNumber(phoneNumber);
+        try {
+            user.updatePhoneNumber(phoneNumber);
+            userRepository.flush();
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("이미 사용 중인 전화번호입니다.", e);
+        }
     }
 }
