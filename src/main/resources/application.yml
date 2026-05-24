@@ -47,10 +47,9 @@ jwt:
   header: Authorization
   prefix: Bearer
 
-#firebase:
-#  config-path: /home/ubuntu/firebase/firebase-service-key.jsonx
 firebase:
-  enabled: false
+  enabled: true
+  config-path: /home/ubuntu/firebase/firebase-service-key.json
 
 api:
   football:

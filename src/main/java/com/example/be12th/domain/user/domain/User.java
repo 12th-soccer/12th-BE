@@ -20,7 +20,7 @@ public class User {
     @Column(name = "email", nullable = false, unique = true , length = 100)
     private String email;
 
-    @Column(name = "phoneNumber", unique = true , length = 12)
+    @Column(name = "phoneNumber", unique = true , length = 20)
     private String phoneNumber;
 
     @Column(name = "name",length = 100)
@@ -45,5 +45,9 @@ public class User {
 
     public boolean isPhoneVerified() {
         return phoneNumber != null;
+    }
+
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
