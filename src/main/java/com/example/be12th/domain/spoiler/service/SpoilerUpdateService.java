@@ -27,7 +27,7 @@ public class SpoilerUpdateService {
                 .orElseGet(() -> spoilerRepository.save(
                         SpoilerSetting.builder()
                                 .user(user)
-                                .spoilerEnabled(true)
+                                .spoilerEnabled(false)
                                 .build())
                 );
         spoilerSetting.update(

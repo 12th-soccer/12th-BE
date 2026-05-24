@@ -26,7 +26,7 @@ public class SpoilerSettingService {
                 .orElseGet(() -> spoilerRepository.save(
                         SpoilerSetting.builder()
                                 .user(user)
-                                .spoilerEnabled(true)
+                                .spoilerEnabled(false)
                                 .build()
                 ));
      return SpoilerResponse.from(spoilerSetting);

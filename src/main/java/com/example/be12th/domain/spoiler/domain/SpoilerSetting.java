@@ -22,7 +22,7 @@ public class SpoilerSetting {
     private User user;
 
     @Builder.Default
-    private Boolean spoilerEnabled = true;
+    private Boolean spoilerEnabled = false;
 
     public void update(
             Boolean spoilerEnabled
