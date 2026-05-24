@@ -48,8 +48,8 @@ jwt:
   prefix: Bearer
 
 firebase:
-  enabled: true
-  config-path: /home/ubuntu/firebase/firebase-service-key.json
+  enabled: ${FIREBASE_ENABLED:false}
+  config-path: ${FIREBASE_CONFIG_PATH:}
 
 api:
   football:
