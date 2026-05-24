@@ -44,10 +44,13 @@ public class User {
     }
 
     public boolean isPhoneVerified() {
-        return phoneNumber != null;
+        return phoneNumber != null && !phoneNumber.isBlank();
     }
 
     public void updatePhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (phoneNumber == null || phoneNumber.isBlank()) {
+            throw new IllegalArgumentException("전화번호는 비어 있을 수 없습니다.");
+        }
+     this.phoneNumber = phoneNumber;
     }
 }
