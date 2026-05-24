@@ -1,6 +1,8 @@
 package com.example.be12th.domain.recruitment.service;
 
 import com.example.be12th.domain.join.domain.repository.JoinRepository;
+import com.example.be12th.domain.notice.domain.Notice;
+import com.example.be12th.domain.notice.domain.repository.NoticeRepository;
 import com.example.be12th.domain.recruitment.domain.Recruitment;
 import com.example.be12th.domain.recruitment.domain.repository.RecruitmentRepository;
 import com.example.be12th.domain.recruitment.presentation.dto.response.RecruitmentQueryResponse;
@@ -13,14 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class RecruitmentQueryService {
     private final RecruitmentRepository recruitmentRepository;
     private final JoinRepository joinRepository;
+    private final NoticeRepository noticeRepository;
 
     @Transactional(readOnly = true)
     public RecruitmentQueryResponse execute(Long recruitmentId) {
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId)
                 .orElseThrow(() -> new RuntimeException("해당 모집 게시글을 찾을수 없습니다."));
 
+        Notice notice = noticeRepository.findByRecruitment(recruitment)
+                .orElse(null);
+
         int currentParticipants = Math.toIntExact(joinRepository.countByRecruitment(recruitment) + 1);
 
-        return RecruitmentQueryResponse.from(recruitment.getUser(), recruitment, currentParticipants);
+        return RecruitmentQueryResponse.from(notice ,recruitment.getUser(), recruitment, currentParticipants);
     }
 }

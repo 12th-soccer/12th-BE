@@ -1,5 +1,6 @@
 package com.example.be12th.domain.recruitment.domain;
 
+import com.example.be12th.domain.notice.domain.Notice;
 import com.example.be12th.domain.recruitment.domain.category.AgeGroup;
 import com.example.be12th.domain.recruitment.domain.category.GenderGroup;
 import com.example.be12th.domain.recruitment.domain.category.K1Group;
@@ -56,4 +57,8 @@ public class Recruitment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notie_id")
+    private Notice notice;
 }
