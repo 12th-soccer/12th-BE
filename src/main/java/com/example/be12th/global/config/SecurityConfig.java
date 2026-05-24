@@ -98,6 +98,7 @@ public class SecurityConfig {
 
                         //join
                         .requestMatchers(HttpMethod.POST, "/join/*").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/join").authenticated()
 
                         //notice
                         .requestMatchers(HttpMethod.POST, "/notice/*").authenticated()
