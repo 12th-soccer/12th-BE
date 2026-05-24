@@ -20,6 +20,9 @@ public class User {
     @Column(name = "email", nullable = false, unique = true , length = 100)
     private String email;
 
+    @Column(name = "phoneNumber", unique = true , length = 20)
+    private String phoneNumber;
+
     @Column(name = "name",length = 100)
     private String name;
 
@@ -38,5 +41,16 @@ public class User {
     }
     public void updateName(String name){
         this.name = name;
+    }
+
+    public boolean isPhoneVerified() {
+        return phoneNumber != null && !phoneNumber.isBlank();
+    }
+
+    public void updatePhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isBlank()) {
+            throw new IllegalArgumentException("전화번호는 비어 있을 수 없습니다.");
+        }
+     this.phoneNumber = phoneNumber;
     }
 }

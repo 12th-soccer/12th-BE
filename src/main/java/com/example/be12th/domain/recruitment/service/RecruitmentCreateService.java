@@ -31,6 +31,10 @@ public class RecruitmentCreateService {
             throw new IllegalArgumentException("k1Group 또는 k2Group 중 하나만 선택해야 합니다.");
         }
 
+        if (!user.isPhoneVerified()) {
+            throw new IllegalArgumentException("휴대전화번호 인증이 필요합니다.");
+        }
+
         Recruitment recruitment = Recruitment.builder()
                 .title(recruitmentRequest.title())
                 .content(recruitmentRequest.content())
