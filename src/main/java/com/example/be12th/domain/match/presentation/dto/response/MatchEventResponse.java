@@ -8,6 +8,7 @@ public record MatchEventResponse(
         String teamName,
         Long playerId,
         String playerName,
+        String playerImageUrl,
         Long assistPlayerId,
         String assistPlayerName
 ) {
