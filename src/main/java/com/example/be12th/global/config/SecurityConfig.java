@@ -3,6 +3,7 @@ package com.example.be12th.global.config;
 import com.example.be12th.domain.user.service.CustomOidcUserService;
 import com.example.be12th.domain.user.service.OAuth2LoginSuccessHandler;
 import com.example.be12th.global.jwt.JwtTokenFilter;
+import com.example.be12th.global.oauth.RedisOAuth2AuthorizationRequestRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class SecurityConfig {
     private final JwtTokenFilter jwtTokenFilter;
     private final CustomOidcUserService customOidcUserService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final RedisOAuth2AuthorizationRequestRepository authorizationRequestRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -124,6 +126,9 @@ public class SecurityConfig {
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .oauth2Login(oauth -> oauth
+                        .authorizationEndpoint(authorization -> authorization
+                                .authorizationRequestRepository(authorizationRequestRepository)
+                        )
                         .userInfoEndpoint(userInfo -> userInfo
                                 .oidcUserService(customOidcUserService)
                         )
