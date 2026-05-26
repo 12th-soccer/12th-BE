@@ -6,26 +6,28 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.util.SerializationUtils;
 import org.springframework.web.util.WebUtils;
 
-import java.util.Base64;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class HttpCookieOAuth2AuthorizationRequestRepository
         implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
 
-    private static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
+    private static final String OAUTH2_STATE_COOKIE_NAME = "oauth2_state";
     private static final int COOKIE_EXPIRE_SECONDS = 180;
+
+    private final Map<String, OAuth2AuthorizationRequest> authorizationRequests = new ConcurrentHashMap<>();
 
     @Override
     public OAuth2AuthorizationRequest loadAuthorizationRequest(HttpServletRequest request) {
-        Cookie cookie = WebUtils.getCookie(request, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
-        if (cookie == null) {
+        String state = getState(request);
+        if (state == null) {
             return null;
         }
 
-        return deserialize(cookie.getValue());
+        return authorizationRequests.get(state);
     }
 
     @Override
@@ -35,22 +37,38 @@ public class HttpCookieOAuth2AuthorizationRequestRepository
             HttpServletResponse response
     ) {
         if (authorizationRequest == null) {
-            deleteCookie(request, response);
+            removeAuthorizationRequest(request, response);
             return;
         }
 
-        addCookie(response, serialize(authorizationRequest), COOKIE_EXPIRE_SECONDS);
+        String state = authorizationRequest.getState();
+        authorizationRequests.put(state, authorizationRequest);
+        addCookie(response, state, COOKIE_EXPIRE_SECONDS);
     }
 
     @Override
     public OAuth2AuthorizationRequest removeAuthorizationRequest(HttpServletRequest request, HttpServletResponse response) {
-        OAuth2AuthorizationRequest authorizationRequest = loadAuthorizationRequest(request);
+        String state = getState(request);
         deleteCookie(request, response);
-        return authorizationRequest;
+
+        if (state == null) {
+            return null;
+        }
+
+        return authorizationRequests.remove(state);
+    }
+
+    private String getState(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, OAUTH2_STATE_COOKIE_NAME);
+        if (cookie == null || cookie.getValue() == null || cookie.getValue().isBlank()) {
+            return null;
+        }
+
+        return cookie.getValue();
     }
 
     private void addCookie(HttpServletResponse response, String value, int maxAge) {
-        Cookie cookie = new Cookie(OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME, value);
+        Cookie cookie = new Cookie(OAUTH2_STATE_COOKIE_NAME, value);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
@@ -58,7 +76,7 @@ public class HttpCookieOAuth2AuthorizationRequestRepository
     }
 
     private void deleteCookie(HttpServletRequest request, HttpServletResponse response) {
-        Cookie cookie = WebUtils.getCookie(request, OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME);
+        Cookie cookie = WebUtils.getCookie(request, OAUTH2_STATE_COOKIE_NAME);
         if (cookie == null) {
             return;
         }
@@ -67,15 +85,5 @@ public class HttpCookieOAuth2AuthorizationRequestRepository
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-    }
-
-    private String serialize(OAuth2AuthorizationRequest authorizationRequest) {
-        return Base64.getUrlEncoder()
-                .encodeToString(SerializationUtils.serialize(authorizationRequest));
-    }
-
-    private OAuth2AuthorizationRequest deserialize(String value) {
-        byte[] bytes = Base64.getUrlDecoder().decode(value);
-        return (OAuth2AuthorizationRequest) SerializationUtils.deserialize(bytes);
     }
 }
