@@ -35,6 +35,9 @@ public class SecurityConfig {
                         //websocket
                         .requestMatchers("/ws", "/ws/**").permitAll()
 
+                        //chat
+                        .requestMatchers(HttpMethod.GET, "/chat/*/messages").authenticated()
+
                         //health
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/health").permitAll()
