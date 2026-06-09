@@ -11,6 +11,6 @@ public class ChatMessagePublisher {
     private final SimpMessagingTemplate messagingTemplate;
 
     public void publish(Long matchId, ChatMessageResponse response) {
-        messagingTemplate.convertAndSend("/topic/chat/" + matchId, response);
+        messagingTemplate.convertAndSend("/pub/chat/" + matchId, response);
     }
 }

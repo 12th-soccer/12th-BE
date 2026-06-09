@@ -11,6 +11,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Controller;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class ChatWebSocketController {
@@ -21,9 +23,11 @@ public class ChatWebSocketController {
     @MessageMapping("/chat/{matchId}")
     public void sendMessage(
             @DestinationVariable Long matchId,
-            @Valid @Payload ChatMessageRequest request
+            @Valid @Payload ChatMessageRequest request,
+            Principal principal
     ) {
-        ChatMessageResponse response = chatMessageCreateService.execute(matchId, request);
+
+        ChatMessageResponse response = chatMessageCreateService.execute(matchId, request, principal.getName());
         chatMessagePublisher.publish(matchId, response);
     }
 }
