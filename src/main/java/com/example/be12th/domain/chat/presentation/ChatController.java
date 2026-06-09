@@ -3,6 +3,8 @@ package com.example.be12th.domain.chat.presentation;
 import com.example.be12th.domain.chat.presentation.dto.response.ChatMessageResponse;
 import com.example.be12th.domain.chat.service.ChatMessageQueryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,7 @@ public class ChatController {
 
     @ResponseBody
     @GetMapping("/{matchId}/messages")
-    public List<ChatMessageResponse> getMessages(@PathVariable Long matchId) {
-        return chatMessageQueryService.execute(matchId);
+    public Slice<ChatMessageResponse> getMessages(@PathVariable Long matchId, Pageable pageable) {
+        return chatMessageQueryService.execute(matchId, pageable);
     }
 }
