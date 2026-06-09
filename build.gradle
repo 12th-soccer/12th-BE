@@ -58,6 +58,9 @@ dependencies {
 
     //firebase
     implementation 'com.google.firebase:firebase-admin:9.4.3'
+
+    //webSocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 tasks.named('test') {
