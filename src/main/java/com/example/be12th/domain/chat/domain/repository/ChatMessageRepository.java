@@ -2,10 +2,12 @@ package com.example.be12th.domain.chat.domain.repository;
 
 import com.example.be12th.domain.chat.domain.ChatMessage;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
-    List<ChatMessage> findByMatchIdOrderByCreatedAtAsc(Long matchId, Pageable pageable);
+    @Query("SELECT cm FROM ChatMessage cm JOIN FETCH cm.user WHERE cm.matchId = :matchId ORDER BY cm.createdAt ASC, cm.id ASC")
+    Slice<ChatMessage> findByMatchIdWithUserOrderByCreatedAtAsc(@Param("matchId") Long matchId, Pageable pageable);
 }
