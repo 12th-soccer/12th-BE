@@ -26,7 +26,7 @@ public class ChatWebSocketController {
             @Valid @Payload ChatMessageRequest request,
             Principal principal
     ) {
-        if (principal != null) {
+        if (principal == null) {
             throw new IllegalStateException("인증되지 않은 사용입니다.");
         }
 
