@@ -23,7 +23,9 @@ public class UserSmsService {
     @Value("${SOLAPI_SENDER}")
     private String fromNumber;
 
-    public void sendSms(String toNumber, String code) {
+    public void sendSms(String toNumber) {
+        String code = createCode();
+
         Message message = new Message();
         message.setFrom(fromNumber);
         message.setTo(toNumber);
@@ -38,13 +40,13 @@ public class UserSmsService {
         } catch (NurigoUnknownException e) {
             throw new RuntimeException("문자 발송 중 알 수 없는 오류가 발생했습니다.");
         }
+
         redisTemplate.opsForValue().set(
-                "sms" +  toNumber,
+                "sms:" + toNumber,
                 code,
                 Duration.ofMinutes(3)
         );
     }
-
 
     private String createCode() {
         Random random = new Random();
