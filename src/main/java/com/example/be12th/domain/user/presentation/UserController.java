@@ -1,10 +1,6 @@
 package com.example.be12th.domain.user.presentation;
 
-import com.example.be12th.domain.user.presentation.dto.request.EmailCheckRequest;
-import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
-import com.example.be12th.domain.user.presentation.dto.request.PhoneVerificationRequest;
-import com.example.be12th.domain.user.presentation.dto.request.UserNameRequest;
-import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
+import com.example.be12th.domain.user.presentation.dto.request.*;
 import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
 import com.example.be12th.domain.user.presentation.dto.response.UserResponse;
 import com.example.be12th.domain.user.service.*;
@@ -25,7 +21,8 @@ public class UserController {
     private final UserInfoService userInfoService;
     private final UserDeleteService userDeleteService;
     private final UserNameChangeService userNameChangeService;
-    private final PhoneVerificationService phoneVerificationService;
+    private final UserSmsService userSmsService;
+    private final UserSmsVerifyService userSmsVerifyService;
 
     @PostMapping("/email")
     @ResponseStatus(HttpStatus.OK)
@@ -69,9 +66,15 @@ public class UserController {
         userNameChangeService.execute(request);
     }
 
+    @PostMapping("/phone/send")
+    @ResponseStatus(HttpStatus.OK)
+    public void sendPhone(@Valid @RequestBody SmsSendRequest request) {
+        userSmsService.sendSms(request.getPhone());
+    }
+
     @PostMapping("/phone/verify")
     @ResponseStatus(HttpStatus.OK)
-    public void verifyPhone(@Valid @RequestBody PhoneVerificationRequest request) {
-        phoneVerificationService.confirmPhoneVerification(request.firebaseIdToken());
+    public void verifySms(@Valid @RequestBody SmsVerifyRequest request){
+        userSmsVerifyService.execute(request.getPhone(), request.getCode());
     }
 }

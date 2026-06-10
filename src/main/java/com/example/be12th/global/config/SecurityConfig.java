@@ -51,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/user/logout").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/user/me").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/user/name").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/user/phone/send").authenticated()
                         .requestMatchers(HttpMethod.POST, "/user/phone/verify").authenticated()
 
                         //ranking
