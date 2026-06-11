@@ -10,8 +10,8 @@ public class SolapiConfig {
 
     @Bean
     public DefaultMessageService defaultMessageService(
-            @Value("${SOLAPI_API_KEY}") String apiKey,
-            @Value("${SOLAPI_API_SECRET}") String apiSecret
+            @Value("${solapi.api-key}") String apiKey,
+            @Value("${solapi.api-secret}") String apiSecret
     ){
         return new DefaultMessageService(apiKey, apiSecret, "https://api.solapi.com");
     }
