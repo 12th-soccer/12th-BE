@@ -2,6 +2,9 @@ package com.example.be12th.global.config;
 
 import com.example.be12th.domain.user.service.CustomOidcUserService;
 import com.example.be12th.domain.user.service.OAuth2LoginSuccessHandler;
+import com.example.be12th.global.error.ErrorResponse;
+import com.example.be12th.global.error.GlobalExceptionFilter;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.example.be12th.global.jwt.JwtTokenFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tools.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +28,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Slf4j
 public class SecurityConfig {
 
+    private static final String CHARACTER_ENCODING = "UTF-8";
+
     private final JwtTokenFilter jwtTokenFilter;
+    private final ObjectMapper objectMapper;
     private final CustomOidcUserService customOidcUserService;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
@@ -120,7 +130,10 @@ public class SecurityConfig {
 
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint((request, response, authException) ->
-                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+                                writeErrorResponse(response, ErrorCode.UNAUTHORIZED)
+                        )
+                        .accessDeniedHandler((request, response, accessDeniedException) ->
+                                writeErrorResponse(response, ErrorCode.FORBIDDEN)
                         )
                 )
 
@@ -128,7 +141,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 )
 
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new GlobalExceptionFilter(objectMapper), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtTokenFilter, GlobalExceptionFilter.class)
 
                 .oauth2Login(oauth -> oauth
                         .userInfoEndpoint(userInfo -> userInfo
@@ -136,11 +150,25 @@ public class SecurityConfig {
                         )
                         .failureHandler((request, response, exception) -> {
                             log.error("OAuth2 login failed", exception);
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
+                            writeErrorResponse(response, ErrorCode.UNAUTHORIZED);
                         })
                         .successHandler(oAuth2LoginSuccessHandler)
                 );
 
         return http.build();
+    }
+
+    private void writeErrorResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
+        if (response.isCommitted()) {
+            return;
+        }
+
+        response.setStatus(errorCode.getStatusCode());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(CHARACTER_ENCODING);
+        objectMapper.writeValue(
+                response.getWriter(),
+                ErrorResponse.of(errorCode, errorCode.getErrorMessage())
+        );
     }
 }

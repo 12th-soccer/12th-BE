@@ -1,5 +1,7 @@
 package com.example.be12th.domain.user.domain;
 
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,7 +51,7 @@ public class User {
 
     public void updatePhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isBlank()) {
-            throw new IllegalArgumentException("전화번호는 비어 있을 수 없습니다.");
+            throw new App12thException(ErrorCode.PHONE_NUMBER_REQUIRED);
         }
      this.phoneNumber = phoneNumber;
     }

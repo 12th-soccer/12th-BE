@@ -2,6 +2,8 @@ package com.example.be12th.domain.user.service;
 
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,7 +34,7 @@ public class CustomOidcUserService extends OidcUserService {
         String name = oidcUser.getFullName();
 
         if (email == null || email.isBlank()) {
-            throw new IllegalStateException("OIDC 제공자에서 이메일을 제공하지 않았습니다.");
+            throw new App12thException(ErrorCode.OIDC_EMAIL_NOT_FOUND);
         }
         User user = userRepository.findByEmail(email)
                 .orElseGet(() -> userRepository.saveAndFlush(
@@ -44,7 +46,7 @@ public class CustomOidcUserService extends OidcUserService {
                 ));
 
         if (user.isDeleted()) {
-            throw new RuntimeException("탈퇴한 회원입니다.");
+            throw new App12thException(ErrorCode.DELETED_USER);
         }
 
         return new DefaultOidcUser(

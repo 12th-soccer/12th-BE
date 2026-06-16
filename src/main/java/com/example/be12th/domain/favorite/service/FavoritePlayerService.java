@@ -7,6 +7,8 @@ import com.example.be12th.domain.player.service.PlayerQueryService;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,15 +26,15 @@ public class FavoritePlayerService {
         Long userId = userFacade.currentUserId();
 
         if (favoritePlayerRepository.existsByUserIdAndPlayerId(userId, playerId)) {
-            throw new RuntimeException("이미 즐겨찾기한 선수입니다.");
+            throw new App12thException(ErrorCode.FAVORITE_PLAYER_ALREADY_EXISTS);
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("해당 유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         PlayerResponse player = playerQueryService.execute(playerId, season);
         if (player == null) {
-            throw new RuntimeException("해당 선수를 찾을 수 없습니다.");
+            throw new App12thException(ErrorCode.PLAYER_NOT_FOUND);
         }
 
         favoritePlayerRepository.save(

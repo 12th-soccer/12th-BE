@@ -3,6 +3,8 @@ package com.example.be12th.domain.user.service;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.presentation.dto.response.UserResponse;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.example.be12th.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,10 +22,10 @@ public class UserInfoService {
         String email = jwtTokenProvider.getEmailFromToken(token);
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("현재 로그인한 사용자와 일치하지않음."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         if (user.isDeleted()) {
-            throw new RuntimeException("탈퇴한 회원입니다.");
+            throw new App12thException(ErrorCode.DELETED_USER);
         }
 
         return UserResponse.from(user);

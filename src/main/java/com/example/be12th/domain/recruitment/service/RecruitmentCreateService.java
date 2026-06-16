@@ -6,6 +6,8 @@ import com.example.be12th.domain.recruitment.presentation.dto.request.Recruitmen
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,14 +27,14 @@ public class RecruitmentCreateService {
         Long currentId = userFacade.currentUserId();
 
         User user = userRepository.findById(currentId)
-                .orElseThrow(() -> new RuntimeException("해당 유저를 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         if ((recruitmentRequest.k1Group() == null) == (recruitmentRequest.k2Group() == null)) {
-            throw new IllegalArgumentException("k1Group 또는 k2Group 중 하나만 선택해야 합니다.");
+            throw new App12thException(ErrorCode.INVALID_RECRUITMENT_LEAGUE_GROUP);
         }
 
         if (!user.isPhoneVerified()) {
-            throw new IllegalArgumentException("휴대전화번호 인증이 필요합니다.");
+            throw new App12thException(ErrorCode.PHONE_VERIFICATION_REQUIRED);
         }
 
         Recruitment recruitment = Recruitment.builder()

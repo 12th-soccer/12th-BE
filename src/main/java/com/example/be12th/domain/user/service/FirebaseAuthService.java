@@ -1,5 +1,7 @@
 package com.example.be12th.domain.user.service;
 
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -13,7 +15,7 @@ public class FirebaseAuthService {
         try {
             return FirebaseAuth.getInstance().verifyIdToken(firebaseIdToken);
         } catch (FirebaseAuthException e) {
-            throw new IllegalArgumentException("유효하지 않은 Firebase 토큰입니다.");
+            throw new App12thException(ErrorCode.INVALID_FIREBASE_TOKEN);
         }
     }
 
@@ -21,7 +23,7 @@ public class FirebaseAuthService {
         try {
             return FirebaseAuth.getInstance().getUser(uid);
         } catch (FirebaseAuthException e) {
-            throw new IllegalArgumentException("Firebase 유저를 찾을 수 없습니다.");
+            throw new App12thException(ErrorCode.FIREBASE_USER_NOT_FOUND);
         }
     }
 }

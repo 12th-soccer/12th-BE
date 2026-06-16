@@ -4,6 +4,8 @@ import com.example.be12th.domain.chat.presentation.dto.request.ChatMessageReques
 import com.example.be12th.domain.chat.presentation.dto.response.ChatMessageResponse;
 import com.example.be12th.domain.chat.service.ChatMessageCreateService;
 import com.example.be12th.domain.chat.service.ChatMessagePublisher;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -27,7 +29,7 @@ public class ChatWebSocketController {
             Principal principal
     ) {
         if (principal == null) {
-            throw new IllegalStateException("인증되지 않은 사용입니다.");
+            throw new App12thException(ErrorCode.AUTHENTICATION_REQUIRED);
         }
 
         ChatMessageResponse response = chatMessageCreateService.execute(matchId, request, principal.getName());

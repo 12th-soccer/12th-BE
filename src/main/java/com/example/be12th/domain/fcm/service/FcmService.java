@@ -1,5 +1,7 @@
 package com.example.be12th.domain.fcm.service;
 
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
@@ -23,7 +25,7 @@ public class FcmService {
 
             FirebaseMessaging.getInstance().send(message);
         } catch (Exception e) {
-            throw new RuntimeException("FCM 전송 실패", e);
+            throw new App12thException(ErrorCode.FCM_SEND_FAILED, e);
         }
     }
 }

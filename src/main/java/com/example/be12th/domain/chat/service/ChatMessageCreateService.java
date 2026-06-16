@@ -6,9 +6,10 @@ import com.example.be12th.domain.chat.presentation.dto.request.ChatMessageReques
 import com.example.be12th.domain.chat.presentation.dto.response.ChatMessageResponse;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +25,7 @@ public class ChatMessageCreateService {
     public ChatMessageResponse execute(Long matchId, @Valid ChatMessageRequest request, String accountId) {
         User user = userRepository.findByEmail(accountId)
                 .filter(foundUser -> !foundUser.isDeleted())
-                .orElseThrow(() -> new UsernameNotFoundException("현재 유저를 찾을수없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         ChatMessage chatMessage = ChatMessage.builder()
                 .matchId(matchId)

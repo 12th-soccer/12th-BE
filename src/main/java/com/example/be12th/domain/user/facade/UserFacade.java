@@ -1,9 +1,10 @@
 package com.example.be12th.domain.user.facade;
 
 import com.example.be12th.domain.user.domain.repository.UserRepository;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,6 @@ public class UserFacade{
 
         return userRepository.findByEmail(accountId)
                 .filter(user -> !user.isDeleted())
-                .orElseThrow(() -> new UsernameNotFoundException("현재 유저를 찾을수없습니다.")).getId();
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND)).getId();
     }
 }

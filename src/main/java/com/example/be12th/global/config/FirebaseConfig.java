@@ -1,5 +1,7 @@
 package com.example.be12th.global.config;
 
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -29,7 +31,7 @@ public class FirebaseConfig {
                 FirebaseApp.initializeApp(options);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Firebase 초기화 실패", e);
+            throw new App12thException(ErrorCode.FIREBASE_INITIALIZE_FAILED, e);
         }
     }
 }

@@ -7,6 +7,8 @@ import com.example.be12th.domain.fcm.presentation.dto.response.NotificationSetti
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class NotificationUpdateService {
     @Transactional
     public NotificationSettingResponse execute(NotificationSettingRequest request) {
         User user = userRepository.findById(userFacade.currentUserId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         NotificationSetting setting = notificationSettingRepository.findByUserId(user.getId())
                 .orElseGet(() -> notificationSettingRepository.save(

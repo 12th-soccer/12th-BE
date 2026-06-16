@@ -9,6 +9,8 @@ import com.example.be12th.domain.recruitment.domain.repository.RecruitmentReposi
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,18 +36,18 @@ public class NoticeCreateService {
     @Transactional
     public void execute(Long recruitmentId, @Valid NoticeRequest noticeRequest) {
         User user = userRepository.findById(userFacade.currentUserId())
-                .orElseThrow(() -> new RuntimeException("해당 유저를 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId)
-                .orElseThrow(() -> new RuntimeException("해당 모집글을 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.RECRUITMENT_NOT_FOUND));
 
         if (!canCreateNotice(user, recruitment)) {
-            throw new RuntimeException("공지글은 모집글 작성자만 작성할 수 있습니다.");
+            throw new App12thException(ErrorCode.NOTICE_CREATE_FORBIDDEN);
         }
 
         long memberCount = joinRepository.countByRecruitment(recruitment) + 1;
         if (memberCount < MIN_NOTICE_MEMBER_COUNT) {
-            throw new RuntimeException("공지글은 최소 4명이 모여야 작성할 수 있습니다.");
+            throw new App12thException(ErrorCode.NOTICE_MIN_MEMBER_REQUIRED);
         }
 
         Notice notice = Notice.builder()
