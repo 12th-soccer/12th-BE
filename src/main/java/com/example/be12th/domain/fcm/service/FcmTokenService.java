@@ -6,6 +6,8 @@ import com.example.be12th.domain.fcm.presentation.dto.request.FcmTokenRequest;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,11 @@ public class FcmTokenService {
     @Transactional
     public void saveToken(FcmTokenRequest request) {
         if (request == null || request.getToken() == null || request.getToken().isBlank()) {
-            throw new IllegalArgumentException("FCM 토큰이 비어 있습니다.");
+            throw new App12thException(ErrorCode.FCM_TOKEN_EMPTY);
         }
 
         User user = userRepository.findById(userFacade.currentUserId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         String token = request.getToken().trim();
 

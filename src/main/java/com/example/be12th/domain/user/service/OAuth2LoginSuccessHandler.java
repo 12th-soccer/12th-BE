@@ -2,6 +2,8 @@ package com.example.be12th.domain.user.service;
 
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.example.be12th.global.jwt.JwtTokenProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,10 +34,10 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String email = oidcUser.getEmail();
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         if (user.isDeleted()) {
-            throw new RuntimeException("탈퇴한 회원입니다.");
+            throw new App12thException(ErrorCode.DELETED_USER);
         }
 
         String accessToken = jwtTokenProvider.generateAccessToken(user.getEmail());

@@ -1,5 +1,8 @@
 package com.example.be12th.domain.footballapi.support;
 
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
+
 public final class KLeagueConstants {
 
     public static final Long KLEAGUE1_ID = 292L;
@@ -12,7 +15,7 @@ public final class KLeagueConstants {
         return switch (league.toLowerCase()){
             case "kleague1" -> KLEAGUE1_ID;
             case "kleague2" -> KLEAGUE2_ID;
-            default -> throw new IllegalArgumentException("지원하지 않는 리그입니다." + league);
+            default -> throw new App12thException(ErrorCode.INVALID_LEAGUE);
         };
     }
 }

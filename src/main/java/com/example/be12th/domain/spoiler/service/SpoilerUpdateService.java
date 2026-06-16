@@ -7,6 +7,8 @@ import com.example.be12th.domain.spoiler.presentation.dto.Response.SpoilerRespon
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ public class SpoilerUpdateService {
     @Transactional
     public SpoilerResponse execute(SpoilerRequest spoilerRequest) {
         User user = userRepository.findById(userFacade.currentUserId())
-                .orElseThrow(()-> new RuntimeException("유저를 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         SpoilerSetting spoilerSetting = spoilerRepository.findByUserId(user.getId())
                 .orElseGet(() -> spoilerRepository.save(

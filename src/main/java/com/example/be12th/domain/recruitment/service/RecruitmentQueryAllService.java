@@ -6,6 +6,8 @@ import com.example.be12th.domain.recruitment.presentation.dto.response.Recruitme
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,10 +27,10 @@ public class RecruitmentQueryAllService {
         Long currentId = userFacade.currentUserId();
 
         User user = userRepository.findById(currentId)
-                .orElseThrow(() -> new RuntimeException("해당 유저를 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         if (!user.isPhoneVerified()) {
-            throw new IllegalArgumentException("휴대전화번호 인증이 필요합니다.");
+            throw new App12thException(ErrorCode.PHONE_VERIFICATION_REQUIRED);
         }
 
         return recruitmentRepository.findAll(pageable)

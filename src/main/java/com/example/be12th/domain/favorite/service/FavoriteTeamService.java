@@ -7,6 +7,8 @@ import com.example.be12th.domain.team.service.TeamQueryService;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +26,14 @@ public class FavoriteTeamService {
         Long userId = userFacade.currentUserId();
 
         if (favoriteTeamRepository.existsByUserIdAndTeamId(userId, teamId)) {
-            throw new RuntimeException("이미 즐겨찾기된 구단입니다.");
+            throw new App12thException(ErrorCode.FAVORITE_TEAM_ALREADY_EXISTS);
         }
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         TeamResponse team = teamQueryService.execute(teamId);
         if (team == null) {
-            throw new RuntimeException("해당 구단을 찾을 수 없습니다.");
+            throw new App12thException(ErrorCode.TEAM_NOT_FOUND);
         }
         favoriteTeamRepository.save(
                 FavoriteTeam.builder()

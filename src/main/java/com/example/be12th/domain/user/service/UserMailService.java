@@ -2,6 +2,8 @@ package com.example.be12th.domain.user.service;
 
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.presentation.dto.request.EmailRequest;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -31,7 +33,7 @@ public class UserMailService {
     @Transactional
     public void execute(EmailRequest emailRequest){
         if (userRepository.existsByEmail(emailRequest.getEmail())) {
-            throw new RuntimeException("이미 회원가입된 이메일입니다.");
+            throw new App12thException(ErrorCode.EMAIL_ALREADY_EXISTS);
         }
 
         String verified = redisTemplate.opsForValue().get(emailRequest.getEmail()+"verified");
@@ -50,7 +52,7 @@ public class UserMailService {
         javaMailSender.send(mailMessage);
         }
         else{
-            throw new RuntimeException("이미 인증이 완료되었습니다.");
+            throw new App12thException(ErrorCode.EMAIL_ALREADY_VERIFIED);
         }
     }
 }

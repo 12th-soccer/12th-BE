@@ -8,6 +8,8 @@ import com.example.be12th.domain.recruitment.domain.Recruitment;
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,13 +32,13 @@ public class NoticeQueryService {
     @Transactional(readOnly = true)
     public NoticeResponse execute(Long noticeId) {
         User user = userRepository.findById(userFacade.currentUserId())
-                .orElseThrow(() -> new RuntimeException("해당 유저를 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         Notice notice = noticeRepository.findById(noticeId)
-                .orElseThrow(() -> new RuntimeException("해당 공지를 찾을수없습니다,"));
+                .orElseThrow(() -> new App12thException(ErrorCode.NOTICE_NOT_FOUND));
 
         if (!canReadNotice(user, notice.getRecruitment())) {
-            throw new RuntimeException("당신은 해당 모집게시물에 참여하지않으셨습니다.");
+            throw new App12thException(ErrorCode.NOTICE_READ_FORBIDDEN);
         }
 
         return NoticeResponse.from(notice);

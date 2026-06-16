@@ -3,6 +3,8 @@ package com.example.be12th.global.jwt;
 import com.example.be12th.domain.auth.RefreshToken;
 import com.example.be12th.domain.auth.repository.RefreshTokenRepository;
 import com.example.be12th.global.auth.AuthDetailsService;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -11,7 +13,6 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -93,9 +94,9 @@ public class JwtTokenProvider {
             parseClaims(token);
             return true;
         } catch (ExpiredJwtException e) {
-            throw new BadCredentialsException("Expired JWT token");
+            throw new App12thException(ErrorCode.EXPIRED_JWT_TOKEN);
         } catch (Exception e) {
-            throw new BadCredentialsException("Invalid JWT token");
+            throw new App12thException(ErrorCode.INVALID_JWT_TOKEN);
         }
     }
 

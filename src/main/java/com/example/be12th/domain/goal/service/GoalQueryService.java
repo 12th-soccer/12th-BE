@@ -6,6 +6,8 @@ import com.example.be12th.domain.footballapi.dto.external.PlayerItem;
 import com.example.be12th.domain.footballapi.dto.external.PlayerStatisticItem;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;
 import com.example.be12th.domain.goal.presentation.dto.response.PlayerGoalResponse;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +30,11 @@ public class GoalQueryService {
 
         PlayerStatisticItem statistic = pickStatistic(item.statistics(), leagueId);
         if (statistic == null) {
-            throw new RuntimeException("해당 리그 통계를 찾을 수 없습니다.");
+            throw new App12thException(ErrorCode.LEAGUE_STAT_NOT_FOUND);
         }
 
         if (statistic.goals() == null) {
-            throw new RuntimeException("선수 goals 통계가 없습니다.");
+            throw new App12thException(ErrorCode.PLAYER_GOALS_STAT_NOT_FOUND);
         }
 
         return new PlayerGoalResponse(

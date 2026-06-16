@@ -4,6 +4,8 @@ import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.presentation.dto.request.UserRequest;
 import com.example.be12th.domain.user.presentation.dto.response.LoginResponse;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import com.example.be12th.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,14 +22,14 @@ public class UserLoginService {
     @Transactional
     public LoginResponse execute(UserRequest userRequest) {
         User user = userRepository.findByEmail(userRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을수없다"));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         if (user.isDeleted()) {
-            throw new RuntimeException("탈퇴한 회원입니다.");
+            throw new App12thException(ErrorCode.DELETED_USER);
         }
 
         if(!passwordEncoder.matches(userRequest.getPassword(), user.getPassword())) {
-            throw new RuntimeException("비밀빈호가 일치하지않습니다.");
+            throw new App12thException(ErrorCode.INVALID_PASSWORD);
         }
 
         String accessToken =

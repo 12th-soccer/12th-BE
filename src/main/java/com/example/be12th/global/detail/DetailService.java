@@ -2,10 +2,11 @@ package com.example.be12th.global.detail;
 
 import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,10 +16,10 @@ public class DetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
         User user = userRepository.findByEmail(email)
                 .filter(foundUser -> !foundUser.isDeleted())
-                .orElseThrow(() -> new UsernameNotFoundException("찾을 수 없는 사용자입니다." + email));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getEmail())

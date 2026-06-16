@@ -1,5 +1,7 @@
 package com.example.be12th.domain.user.service;
 
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.message.exception.NurigoEmptyResponseException;
@@ -40,19 +42,19 @@ public class UserSmsService {
         } catch (NurigoMessageNotReceivedException e) {
             log.warn("SMS was not received. from={}, to={}, failedMessages={}",
                     maskPhone(fromNumber), maskPhone(toNumber), e.getFailedMessageList(), e);
-            throw new RuntimeException("문자 발송에 실패했습니다. Solapi 설정과 발신번호 승인 상태를 확인해주세요.", e);
+            throw new App12thException(ErrorCode.SMS_SEND_FAILED, e);
         } catch (NurigoEmptyResponseException e) {
             log.warn("Solapi returned empty response. from={}, to={}",
                     maskPhone(fromNumber), maskPhone(toNumber), e);
-            throw new RuntimeException("솔라피 응답이 비어있습니다.", e);
+            throw new App12thException(ErrorCode.SMS_EMPTY_RESPONSE, e);
         } catch (NurigoUnknownException e) {
             log.warn("Unknown Solapi SMS error. from={}, to={}, solapiMessage={}",
                     maskPhone(fromNumber), maskPhone(toNumber), e.getMessage(), e);
-            throw new RuntimeException("문자 발송 중 오류가 발생했습니다: " + e.getMessage(), e);
+            throw new App12thException(ErrorCode.SMS_UNKNOWN_ERROR, e);
         } catch (Exception e) {
             log.warn("Unexpected SMS send error. from={}, to={}",
                     maskPhone(fromNumber), maskPhone(toNumber), e);
-            throw new RuntimeException("문자 발송 중 예상하지 못한 오류가 발생했습니다: " + e.getMessage(), e);
+            throw new App12thException(ErrorCode.SMS_UNEXPECTED_ERROR, e);
         }
 
         redisTemplate.opsForValue().set(
@@ -70,7 +72,7 @@ public class UserSmsService {
 
     private void validateSender() {
         if (fromNumber == null || fromNumber.isBlank()) {
-            throw new RuntimeException("Solapi 발신번호가 설정되지 않았습니다.");
+            throw new App12thException(ErrorCode.SMS_SENDER_NOT_CONFIGURED);
         }
     }
 

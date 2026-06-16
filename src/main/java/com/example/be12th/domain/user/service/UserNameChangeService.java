@@ -4,6 +4,8 @@ import com.example.be12th.domain.user.domain.User;
 import com.example.be12th.domain.user.domain.repository.UserRepository;
 import com.example.be12th.domain.user.facade.UserFacade;
 import com.example.be12th.domain.user.presentation.dto.request.UserNameRequest;
+import com.example.be12th.global.error.exception.App12thException;
+import com.example.be12th.global.error.exception.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class UserNameChangeService {
     @Transactional
     public void execute(@Valid UserNameRequest userNameRequest) {
         User user = userRepository.findById(userFacade.currentUserId())
-                .orElseThrow(() -> new RuntimeException("유저를 찾을수 없습니다."));
+                .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
         user.updateName(
              userNameRequest.username()
