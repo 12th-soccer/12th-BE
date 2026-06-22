@@ -1,0 +1,82 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: be12th
+          MYSQL_USER: be12th
+          MYSQL_PASSWORD: be12th
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+      redis:
+        image: redis:7.4-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DB_URL: jdbc:mysql://localhost:3306/be12th
+      DB_USERNAME: be12th
+      DB_PASSWORD: be12th
+      REDIS_HOST: localhost
+      REDIS_PORT: 6379
+      GOOGLE_CLIENT_ID: test-client-id
+      GOOGLE_CLIENT_SECRET: test-client-secret
+      REDIRECT_URI: http://localhost:8080/login/oauth2/code/google
+      GOOGLE_EMAIL: test@example.com
+      GOOGLE_PASSWORD: test-password
+      JWT_SECRET_KEY: test-secret-key-test-secret-key-1234
+      FIREBASE_ENABLED: false
+      API_FOOTBALL_KEY: test-api-key
+      SOLAPI_API_KEY: test-api-key
+      SOLAPI_API_SECRET: test-api-secret
+      SOLAPI_SENDER: "01000000000"
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: temurin
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run tests
+        run: ./gradlew clean test
+
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: build/reports/tests/test
+          if-no-files-found: ignore
