@@ -24,8 +24,12 @@ public class PlayerController {
     }
 
     @GetMapping("/{playerId}")
-    public PlayerResponse getPlayerById(@PathVariable Long playerId, @RequestParam int season) {
-        return playerQueryService.execute(playerId, season);
+    public PlayerResponse getPlayerById(
+            @PathVariable Long playerId,
+            @RequestParam Long leagueId,
+            @RequestParam int season
+    ) {
+        return playerQueryService.execute(playerId, leagueId, season);
     }
 
     @GetMapping("/kleague1")

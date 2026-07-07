@@ -22,7 +22,7 @@ public class FavoritePlayerService {
     private final PlayerQueryService playerQueryService;
 
     @Transactional
-    public void execute(Long playerId, int season) {
+    public void execute(Long playerId, Long leagueId, int season) {
         Long userId = userFacade.currentUserId();
 
         if (favoritePlayerRepository.existsByUserIdAndPlayerId(userId, playerId)) {
@@ -32,7 +32,7 @@ public class FavoritePlayerService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new App12thException(ErrorCode.USER_NOT_FOUND));
 
-        PlayerResponse player = playerQueryService.execute(playerId, season);
+        PlayerResponse player = playerQueryService.execute(playerId, leagueId, season);
         if (player == null) {
             throw new App12thException(ErrorCode.PLAYER_NOT_FOUND);
         }

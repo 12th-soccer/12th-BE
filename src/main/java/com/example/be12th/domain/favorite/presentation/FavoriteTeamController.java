@@ -38,8 +38,12 @@ public class FavoriteTeamController {
     }
 
     @PostMapping("/player/{playerId}")
-    public void favoritePlayer(@PathVariable Long playerId,@RequestParam int season) {
-        favoritePlayerService.execute(playerId,season);
+    public void favoritePlayer(
+            @PathVariable Long playerId,
+            @RequestParam Long leagueId,
+            @RequestParam int season
+    ) {
+        favoritePlayerService.execute(playerId, leagueId, season);
     }
 
     @DeleteMapping("/player/{playerId}")
