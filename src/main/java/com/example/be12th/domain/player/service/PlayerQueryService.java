@@ -21,8 +21,8 @@ public class PlayerQueryService {
 
     private final PlayerRepository playerRepository;
 
-    public PlayerResponse execute(Long playerId, Long leagueId, int season) {
-        return playerRepository.findFirstByExternalPlayerIdAndLeagueIdAndSeasonOrderByIdDesc(playerId, leagueId, season)
+    public PlayerResponse execute(Long playerId, int season) {
+        return playerRepository.findFirstByExternalPlayerIdAndSeasonOrderByIdDesc(playerId, season)
                 .map(this::toPlayerResponse)
                 .orElse(null);
     }

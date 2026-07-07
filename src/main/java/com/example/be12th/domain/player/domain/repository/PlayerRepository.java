@@ -39,9 +39,8 @@ public interface PlayerRepository extends JpaRepository<Player, Long> {
             Pageable pageable
     );
 
-    Optional<Player> findFirstByExternalPlayerIdAndLeagueIdAndSeasonOrderByIdDesc(
+    Optional<Player> findFirstByExternalPlayerIdAndSeasonOrderByIdDesc(
             Long externalPlayerId,
-            Long leagueId,
             Integer season
     );
 }
