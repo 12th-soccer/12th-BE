@@ -60,6 +60,11 @@ player:
     enabled: ${PLAYER_SYNC_ENABLED:true}
     cron: "${PLAYER_SYNC_CRON:0 0 1 * * *}"
 
+team:
+  sync:
+    enabled: ${TEAM_SYNC_ENABLED:true}
+    cron: "${TEAM_SYNC_CRON:0 30 0 * * *}"
+
 server:
   forward-headers-strategy: framework
 

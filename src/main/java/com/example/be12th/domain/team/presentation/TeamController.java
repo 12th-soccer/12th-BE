@@ -4,6 +4,7 @@ import com.example.be12th.domain.team.presentation.dto.response.TeamDetailRespon
 import com.example.be12th.domain.team.presentation.dto.response.TeamResponse;
 import com.example.be12th.domain.team.service.TeamDetailQueryService;
 import com.example.be12th.domain.team.service.TeamQueryService;
+import com.example.be12th.domain.team.service.TeamSyncService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,12 @@ import java.util.List;
 public class TeamController {
     private final TeamQueryService teamQueryService;
     private final TeamDetailQueryService teamDetailQueryService;
+    private final TeamSyncService teamSyncService;
+
+    @PostMapping("/sync")
+    public void syncTeams(@RequestParam Long leagueId, @RequestParam int season) {
+        teamSyncService.execute(leagueId, season);
+    }
 
     @GetMapping("/{teamId}")
     public TeamDetailResponse getTeamById(@PathVariable Long teamId, @RequestParam(required = false) Integer season) {
