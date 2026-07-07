@@ -65,6 +65,11 @@ team:
     enabled: ${TEAM_SYNC_ENABLED:true}
     cron: "${TEAM_SYNC_CRON:0 30 0 * * *}"
 
+match:
+  sync:
+    enabled: ${MATCH_SYNC_ENABLED:true}
+    cron: "${MATCH_SYNC_CRON:0 0 0 * * *}"
+
 server:
   forward-headers-strategy: framework
 

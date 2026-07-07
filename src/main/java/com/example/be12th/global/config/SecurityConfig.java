@@ -74,6 +74,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/teams/*").authenticated()
 
                         //match
+                        .requestMatchers(HttpMethod.POST, "/match/sync").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/kleague2").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/*").authenticated()
