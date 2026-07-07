@@ -8,7 +8,6 @@ import com.example.be12th.domain.player.domain.Player;
 import com.example.be12th.domain.player.domain.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;

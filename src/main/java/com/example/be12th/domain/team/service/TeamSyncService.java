@@ -7,7 +7,9 @@ import com.example.be12th.domain.team.domain.Team;
 import com.example.be12th.domain.team.domain.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +17,8 @@ public class TeamSyncService {
 
     private final TeamRepository teamRepository;
     private final FootballClient footballClient;
+    private final TransactionTemplate transactionTemplate;
 
-    @Transactional
     public void execute(Long leagueId, int season) {
         TeamApiResponse result = footballClient.getTeamsByLeague(leagueId, season);
 
@@ -24,7 +26,12 @@ public class TeamSyncService {
             return;
         }
 
-        for (TeamDetailItem item : result.response()) {
+        List<TeamDetailItem> items = result.response();
+        transactionTemplate.executeWithoutResult(status -> syncTeams(leagueId, season, items));
+    }
+
+    private void syncTeams(Long leagueId, int season, List<TeamDetailItem> items) {
+        for (TeamDetailItem item : items) {
             if (!isValid(item)) {
                 continue;
             }
