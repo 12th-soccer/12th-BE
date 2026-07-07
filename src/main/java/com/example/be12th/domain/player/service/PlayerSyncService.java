@@ -9,23 +9,54 @@ import com.example.be12th.domain.player.domain.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class PlayerSyncService {
 
+    private static final int MAX_SYNC_PAGE = 100;
+
     private final PlayerRepository playerRepository;
     private final FootballClient footballClient;
+    private final TransactionTemplate transactionTemplate;
+
+    public void executeAll(Long leagueId, int season) {
+        int page = 1;
+
+        while (page <= MAX_SYNC_PAGE) {
+            PlayerApiResponse result = footballClient.getPlayersByLeague(leagueId, season, page);
+
+            if (isEmpty(result)) {
+                return;
+            }
+
+            List<PlayerItem> items = result.response();
+            transactionTemplate.executeWithoutResult(status -> syncPlayers(leagueId, season, items));
+
+            if (!hasNextPage(result, page)) {
+                return;
+            }
+
+            page++;
+        }
+    }
 
     @Transactional
     public void execute(Long leagueId, int season, int page) {
         PlayerApiResponse result = footballClient.getPlayersByLeague(leagueId, season, page);
 
-        if (result == null || result.response() == null) {
+        if (isEmpty(result)) {
             return;
         }
 
-        for (PlayerItem item : result.response()) {
+        syncPlayers(leagueId, season, result.response());
+    }
+
+    private void syncPlayers(Long leagueId, int season, List<PlayerItem> items) {
+        for (PlayerItem item : items) {
             if (!isValid(item, leagueId)) {
                 continue;
             }
@@ -68,6 +99,20 @@ public class PlayerSyncService {
         );
 
         playerRepository.save(player);
+    }
+
+    private boolean isEmpty(PlayerApiResponse result) {
+        return result == null
+                || result.response() == null
+                || result.response().isEmpty();
+    }
+
+    private boolean hasNextPage(PlayerApiResponse result, int page) {
+        if (result.paging() == null || result.paging().total() == null) {
+            return page < MAX_SYNC_PAGE;
+        }
+
+        return page < result.paging().total();
     }
 
     private boolean isValid(PlayerItem item, Long leagueId) {

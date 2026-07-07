@@ -55,6 +55,11 @@ api:
   football:
     key: ${API_FOOTBALL_KEY}
 
+player:
+  sync:
+    enabled: ${PLAYER_SYNC_ENABLED:true}
+    cron: "${PLAYER_SYNC_CRON:0 0 1 * * *}"
+
 server:
   forward-headers-strategy: framework
 

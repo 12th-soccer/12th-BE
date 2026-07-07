@@ -78,6 +78,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/match/*").authenticated()
 
                         //player
+                        .requestMatchers(HttpMethod.POST, "/player/sync").authenticated()
                         .requestMatchers(HttpMethod.GET, "/player/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/player/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/player/kleague2").authenticated()
