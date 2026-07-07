@@ -4,6 +4,7 @@ import com.example.be12th.domain.match.presentation.dto.response.MatchDetailResp
 import com.example.be12th.domain.match.presentation.dto.response.MatchResponse;
 import com.example.be12th.domain.match.service.KLeagueMatchDetailQueryService;
 import com.example.be12th.domain.match.service.MatchQueryService;
+import com.example.be12th.domain.match.service.MatchSyncService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,6 +16,12 @@ public class MatchController {
 
     private final MatchQueryService matchQueryService;
     private final KLeagueMatchDetailQueryService kLeagueMatchDetailQueryService;
+    private final MatchSyncService matchSyncService;
+
+    @PostMapping("/sync")
+    public void syncMatches(@RequestParam Long leagueId, @RequestParam int season) {
+        matchSyncService.execute(leagueId, season);
+    }
 
     @GetMapping("/kleague1")
     public List<MatchResponse> getKLeague1Matches(@RequestParam int season, @RequestParam String date) {

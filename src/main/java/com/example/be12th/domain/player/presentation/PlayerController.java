@@ -2,6 +2,7 @@ package com.example.be12th.domain.player.presentation;
 
 import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
 import com.example.be12th.domain.player.service.PlayerQueryService;
+import com.example.be12th.domain.player.service.PlayerSyncService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,15 @@ import java.util.List;
 @RequestMapping("/player")
 public class PlayerController {
     private final PlayerQueryService playerQueryService;
+    private final PlayerSyncService playerSyncService;
+
+    @PostMapping("/sync")
+    public void syncPlayers(
+            @RequestParam Long leagueId,
+            @RequestParam int season
+    ) {
+        playerSyncService.executeAll(leagueId, season);
+    }
 
     @GetMapping("/{playerId}")
     public PlayerResponse getPlayerById(@PathVariable Long playerId, @RequestParam int season) {

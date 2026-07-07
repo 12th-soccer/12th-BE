@@ -1,6 +1,7 @@
 package com.example.be12th.domain.match.presentation.dto.response;
 
 import com.example.be12th.domain.footballapi.dto.external.FixtureItem;
+import com.example.be12th.domain.match.domain.FootballMatch;
 
 public record MatchResponse(
         Long matchId,
@@ -22,6 +23,19 @@ public record MatchResponse(
                 item.teams().away().logo(),
                 item.goals().home(),
                 item.goals().away()
+        );
+    }
+
+    public static MatchResponse from(FootballMatch match) {
+        return new MatchResponse(
+                match.getExternalFixtureId(),
+                match.getMatchDate(),
+                match.getHomeTeamName(),
+                match.getHomeTeamLogo(),
+                match.getAwayTeamName(),
+                match.getAwayTeamLogo(),
+                match.getHomeScore(),
+                match.getAwayScore()
         );
     }
 }

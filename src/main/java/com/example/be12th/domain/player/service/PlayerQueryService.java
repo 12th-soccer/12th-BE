@@ -1,29 +1,30 @@
 package com.example.be12th.domain.player.service;
 
-import com.example.be12th.domain.footballapi.dto.external.*;
-import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
-import com.example.be12th.domain.footballapi.client.FootballClient;
 import com.example.be12th.domain.footballapi.support.KLeagueConstants;
+import com.example.be12th.domain.player.domain.Player;
+import com.example.be12th.domain.player.domain.repository.PlayerRepository;
+import com.example.be12th.domain.player.presentation.dto.response.PlayerResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PlayerQueryService {
-    private final FootballClient footballClient;
+    private static final int PAGE_SIZE = 20;
+
+    private final PlayerRepository playerRepository;
 
     public PlayerResponse execute(Long playerId, int season) {
-        PlayerApiResponse result = footballClient.getPlayerDetail(playerId, season);
-
-        if (result == null || result.response() == null || result.response().isEmpty()) {
-            return null;
-        }
-
-        return toPlayerResponse(result.response().get(0), true);
+        return playerRepository.findFirstByExternalPlayerIdAndSeasonOrderByIdDesc(playerId, season)
+                .map(this::toPlayerResponse)
+                .orElse(null);
     }
 
     public List<PlayerResponse> getKLeague1Players(int season, int page) {
@@ -52,96 +53,38 @@ public class PlayerQueryService {
     }
 
     private List<PlayerResponse> getPlayersByLeague(Long leagueId, int season, int page) {
-        PlayerApiResponse result = footballClient.getPlayersByLeague(leagueId, season, page);
-
-        if (result == null || result.response() == null) {
-            return List.of();
-        }
-
-        return result.response().stream()
-                .map(item -> toPlayerResponse(item, false))
-                .filter(player -> player != null && player.teamId() != null)
+        return playerRepository.findAllByLeagueIdAndSeason(leagueId, season, pageable(page)).stream()
+                .map(this::toPlayerResponse)
                 .toList();
     }
 
     private List<PlayerResponse> searchPlayersByLeague(Long leagueId, String keyword, int season, int page) {
-        PlayerApiResponse result = footballClient.searchPlayersByLeague(leagueId, keyword, season, page);
-
-        if (result == null || result.response() == null) {
-            return List.of();
-        }
-
-        String normalizedKeyword = keyword.toLowerCase(Locale.ROOT);
-
-        return result.response().stream()
-                .map(item -> toPlayerResponse(item, false))
-                .filter(player -> player != null && player.teamId() != null)
-                .filter(player -> player.name() != null)
-                .filter(player -> player.name().toLowerCase(Locale.ROOT).contains(normalizedKeyword))
+        return playerRepository.findAllByLeagueIdAndSeasonAndNameContainingIgnoreCase(
+                        leagueId,
+                        season,
+                        keyword,
+                        pageable(page)
+                ).stream()
+                .map(this::toPlayerResponse)
                 .toList();
     }
 
-    private PlayerResponse toPlayerResponse(PlayerItem item, boolean includeSquadInfo) {
-        if (item == null || item.player() == null) {
-            return null;
-        }
+    private Pageable pageable(int page) {
+        return PageRequest.of(Math.max(page, 1) - 1, PAGE_SIZE);
+    }
 
-        PlayerStatisticItem statistic = pickStatistic(item.statistics());
-        Long teamId = statistic == null || statistic.team() == null ? null : statistic.team().id();
-        PlayerSquadInfo squadInfo = includeSquadInfo ? findSquadInfo(teamId, item.player().id()) : null;
-        Integer number = squadInfo != null && squadInfo.number() != null
-                ? squadInfo.number()
-                : statistic == null || statistic.games() == null ? null : statistic.games().number();
-        String position = squadInfo != null && squadInfo.position() != null
-                ? squadInfo.position()
-                : statistic == null || statistic.games() == null ? null : statistic.games().position();
-
+    private PlayerResponse toPlayerResponse(Player player) {
         return new PlayerResponse(
-                item.player().id(),
-                item.player().name(),
-                item.player().age(),
-                item.player().nationality(),
-                item.player().photo(),
-                position,
-                teamId,
-                statistic == null || statistic.team() == null ? null : statistic.team().name(),
-                statistic == null || statistic.team() == null ? null : statistic.team().logo(),
-                number
+                player.getExternalPlayerId(),
+                player.getName(),
+                player.getAge(),
+                player.getNationality(),
+                player.getPhotoUrl(),
+                player.getPosition(),
+                player.getTeamId(),
+                player.getTeamName(),
+                player.getTeamLogo(),
+                player.getNumber()
         );
-    }
-
-    private PlayerStatisticItem pickStatistic(List<PlayerStatisticItem> statistics) {
-        if (statistics == null || statistics.isEmpty()) {
-            return null;
-        }
-
-        return statistics.stream()
-                .filter(statistic -> statistic.league() != null)
-                .filter(statistic -> statistic.league().id() != null)
-                .filter(statistic ->
-                        statistic.league().id().equals(KLeagueConstants.KLEAGUE1_ID) ||
-                                statistic.league().id().equals(KLeagueConstants.KLEAGUE2_ID)
-                )
-                .findFirst()
-                .orElse(null);
-    }
-    private PlayerSquadInfo findSquadInfo(Long teamId, Long playerId) {
-        if (teamId == null || playerId == null) {
-            return null;
-        }
-
-        PlayerSquadApiResponse result = footballClient.getPlayerSquad(teamId);
-        if (result == null || result.response() == null) {
-            return null;
-        }
-
-        return result.response().stream()
-                .map(PlayerSquadItem::players)
-                .filter(players -> players != null && !players.isEmpty())
-                .flatMap(List::stream)
-                .filter(player -> player.id() != null)
-                .filter(player -> player.id().equals(playerId))
-                .findFirst()
-                .orElse(null);
     }
 }

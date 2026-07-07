@@ -68,16 +68,19 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/ranking").authenticated()
 
                         //team
+                        .requestMatchers(HttpMethod.POST, "/teams/sync").authenticated()
                         .requestMatchers(HttpMethod.GET, "/teams/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/teams/kleague2").authenticated()
                         .requestMatchers(HttpMethod.GET, "/teams/*").authenticated()
 
                         //match
+                        .requestMatchers(HttpMethod.POST, "/match/sync").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/kleague2").authenticated()
                         .requestMatchers(HttpMethod.GET, "/match/*").authenticated()
 
                         //player
+                        .requestMatchers(HttpMethod.POST, "/player/sync").authenticated()
                         .requestMatchers(HttpMethod.GET, "/player/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/player/kleague1").authenticated()
                         .requestMatchers(HttpMethod.GET, "/player/kleague2").authenticated()
