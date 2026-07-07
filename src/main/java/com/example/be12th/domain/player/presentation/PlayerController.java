@@ -18,15 +18,9 @@ public class PlayerController {
     @PostMapping("/sync")
     public void syncPlayers(
             @RequestParam Long leagueId,
-            @RequestParam int season,
-            @RequestParam(required = false) Integer page
+            @RequestParam int season
     ) {
-        if (page == null) {
-            playerSyncService.executeAll(leagueId, season);
-            return;
-        }
-
-        playerSyncService.execute(leagueId, season, page);
+        playerSyncService.executeAll(leagueId, season);
     }
 
     @GetMapping("/{playerId}")

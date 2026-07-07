@@ -44,17 +44,6 @@ public class PlayerSyncService {
         }
     }
 
-    @Transactional
-    public void execute(Long leagueId, int season, int page) {
-        PlayerApiResponse result = footballClient.getPlayersByLeague(leagueId, season, page);
-
-        if (isEmpty(result)) {
-            return;
-        }
-
-        syncPlayers(leagueId, season, result.response());
-    }
-
     private void syncPlayers(Long leagueId, int season, List<PlayerItem> items) {
         for (PlayerItem item : items) {
             if (!isValid(item, leagueId)) {
