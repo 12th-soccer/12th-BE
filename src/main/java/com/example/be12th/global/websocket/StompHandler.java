@@ -41,5 +41,6 @@ public class StompHandler implements ChannelInterceptor {
         accessor.setLeaveMutable(true);
 
         return message;
+
     }
 }
