@@ -1,0 +1,35 @@
+name: 12th-be
+
+services:
+  api:
+    image: "${APP_IMAGE:-12th-be:latest}"
+    container_name: 12th-be
+    restart: unless-stopped
+    init: true
+    env_file:
+      - "${APP_ENV_FILE:-.env}"
+    environment:
+      SERVER_PORT: "8080"
+      TZ: "${TZ:-Asia/Seoul}"
+      JAVA_TOOL_OPTIONS: "${JAVA_TOOL_OPTIONS:--XX:MaxRAMPercentage=75.0 -Dfile.encoding=UTF-8}"
+    ports:
+      # Nginx가 같은 EC2 호스트에서 80/443 요청을 프록시하는 구성을 전제로 한다.
+      - "${BIND_ADDRESS:-127.0.0.1}:${APP_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 3 bash -c '</dev/tcp/127.0.0.1/8080'"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    stop_grace_period: 30s
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    # Firebase를 사용할 때 EC2에 키 파일을 만든 뒤 아래 설정을 활성화한다.
+    # volumes:
+    #   - ./secrets/firebase-service-key.json:/run/secrets/firebase-service-key.json:ro
