@@ -13,6 +13,14 @@ services:
       TZ: "${TZ:-Asia/Seoul}"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
     security_opt:
       - no-new-privileges:true
     logging:
@@ -36,6 +44,14 @@ services:
       - "${REDIS_PASSWORD:-local-redis-password}"
     volumes:
       - redis_data:/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - REDISCLI_AUTH="$$REDIS_PASSWORD" redis-cli ping | grep -q PONG
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     security_opt:
       - no-new-privileges:true
     logging:
@@ -74,6 +90,15 @@ services:
         condition: service_healthy
       redis-server:
         condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - timeout 3 bash -c '</dev/tcp/127.0.0.1/8080'
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    stop_grace_period: 30s
     security_opt:
       - no-new-privileges:true
     logging:
