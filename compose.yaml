@@ -1,6 +1,49 @@
 name: 12th-be
 
 services:
+  mysql-server:
+    image: mysql:8.0
+    container_name: mysql-server
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-be12th}"
+      MYSQL_USER: "${DB_USERNAME:-be12th}"
+      MYSQL_PASSWORD: "${DB_PASSWORD:-local-db-password}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-local-root-password}"
+      TZ: "${TZ:-Asia/Seoul}"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  redis-server:
+    image: redis:7-alpine
+    container_name: redis-server
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: "${REDIS_PASSWORD:-local-redis-password}"
+      TZ: "${TZ:-Asia/Seoul}"
+    command:
+      - redis-server
+      - --appendonly
+      - "yes"
+      - --requirepass
+      - "${REDIS_PASSWORD:-local-redis-password}"
+    volumes:
+      - redis_data:/data
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
   api:
     image: "${APP_IMAGE:-12th-be:latest}"
     build:
@@ -10,20 +53,27 @@ services:
     restart: unless-stopped
     init: true
     env_file:
-      - "${APP_ENV_FILE:-.env}"
+      - path: "${APP_ENV_FILE:-.env}"
+        required: false
     environment:
       SERVER_PORT: "8080"
       TZ: "${TZ:-Asia/Seoul}"
       JAVA_TOOL_OPTIONS: "${JAVA_TOOL_OPTIONS:--XX:MaxRAMPercentage=75.0 -Dfile.encoding=UTF-8}"
+
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-server:3306/${MYSQL_DATABASE:-be12th}"
+      SPRING_DATASOURCE_USERNAME: "${DB_USERNAME:-be12th}"
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD:-local-db-password}"
+
+      SPRING_DATA_REDIS_HOST: redis-server
+      SPRING_DATA_REDIS_PORT: "6379"
+      SPRING_DATA_REDIS_PASSWORD: "${REDIS_PASSWORD:-local-redis-password}"
     ports:
       - "${BIND_ADDRESS:-127.0.0.1}:${APP_PORT:-8080}:8080"
-    healthcheck:
-      test: ["CMD-SHELL", "timeout 3 bash -c '</dev/tcp/127.0.0.1/8080'"]
-      interval: 15s
-      timeout: 5s
-      retries: 5
-      start_period: 60s
-    stop_grace_period: 30s
+    depends_on:
+      mysql-server:
+        condition: service_healthy
+      redis-server:
+        condition: service_healthy
     security_opt:
       - no-new-privileges:true
     logging:
@@ -35,3 +85,7 @@ services:
     # Firebase를 사용할 때 EC2에 키 파일을 만든 뒤 아래 설정을 활성화한다.
     # volumes:
     #   - ./secrets/firebase-service-key.json:/run/secrets/firebase-service-key.json:ro
+
+volumes:
+  mysql_data:
+  redis_data:
